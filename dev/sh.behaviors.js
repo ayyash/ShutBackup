@@ -109,26 +109,3 @@ $(function () {
 	});
 
 });
-
-
-
-/* NEW: events model */
-/* TOGO */
-/* TODO: create event object in method format to allow delayed event attachment, cant use bind, because i wnat to rely on "data" */
-function attachEvents(events) {
-
-	for (var e in events) {
-		var fnvalue = this.data(e);
-		if (fnvalue) {
-			var fn = window[fnvalue];
-
-			if (typeof (fn) === "function") {
-				events[e] = fn;
-			} else {
-				// this is script function, not function name, return it
-				events[e] = fnvalue;
-			}
-		}
-	}
-
-}
