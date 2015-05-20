@@ -1,0 +1,118 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+/**************TODO:REMOVE PROJECT SPECIFIC STYLES ****************/
+
+/* Indentation block */
+.indblock {
+	/* specially used when radiobuttons, checkboxes or small icons are to be placed on first line of a group, and pad everything else to the right */
+	padding-left: @gridGutterWidth;
+	position: relative;
+}
+.indblock .indelem {
+	position: absolute;
+	left: 0;
+}
+.indblock .indelem[type="radio"],
+.indblock .indelem[type="checkbox"] {
+	margin-top: 5px;
+}
+.indblock.col  {
+	margin-right: 0;
+}
+
+/*** default fieldset and legends */
+fieldset, legend {
+	display: block;
+}
+fieldset {
+	margin-bottom: 20px;
+}
+legend {
+	font-weight: bold;
+	padding-bottom: 10px;
+}
+
+
+/**** definition lists coupled with forms fieldset and legends */
+.overview dt {
+	display: block;
+	padding-right: 5px;
+}
+.overview fieldset>div.stack,
+.overview dd {
+	display:block;
+	padding-bottom: 5px;
+}
+.overview fieldset {
+	display: block;
+	position: relative;
+}
+
+
+.overview legend {
+	display: block;
+	font-weight: bold;
+	padding-top: 10px;
+}
+
+.detailed fieldset {
+	display: block;	
+	position: relative;
+	.clearfix();
+}
+.detailed dl {
+	.clearfix();
+}
+ 
+.detailed dt,
+.detailed fieldset legend {
+	float: left; 
+	/*.columns(2);*/
+	font-weight: normal;
+	/* unusual decision to pad top to make coding easier */
+	padding-top: 5px;
+	display: block;
+	.clearfix;
+}
+
+.detailed dd,
+.detailed fieldset>.stack,
+.detailed>.stack {
+	padding-top: 5px;
+}
+
+
+/* stack invese*/
+.invstack {
+	dd {
+		   padding-bottom: 0;
+	   }
+	dt {
+		   .small;
+		   margin-bottom: 20px;
+	  }
+	.stackitem {
+		margin-bottom: 20px;
+	}
+    &.xlarge dd {
+        .large;
+    }
+    &.xxlarge dd {
+        .larger;
+    }
+}
+
+
+/* new label field tabulated, code named fox */
+ol.fox{
+	>li {
+			position:relative;
+			.padshift(2);
+	    }
+	>li>label {
+		position: absolute;
+		left: 0;
+		.c2;
+	}
+}

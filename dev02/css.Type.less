@@ -1,0 +1,304 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+/* font setting */
+
+body, textarea, select, option, input 
+{
+	font-family: @fontface;
+	#rem > .font-size(@baseFontSize);
+	color: @color;
+}
+.lightfont
+{
+	font-family: @lightfontface;
+	font-weight: 300;
+}
+.boldface {
+	font-weight: 700;
+}
+.italicface {
+	font-style: italic;
+}
+.large {	#rem > .font-size(1.3 * @baseFontSize);}
+.larger {	#rem > .font-size(1.8 * @baseFontSize); }
+.small {	#rem > .font-size(0.9 * @baseFontSize);}
+.smaller {	#rem > .font-size(0.8 * @baseFontSize);}
+
+
+/* labels and boxes */
+.red {
+	color: @red;
+}
+.green {
+	color: @green;
+}
+.blue {
+	color: @blue;
+}
+.light {
+	color: @textlight;
+}
+.lighter {
+	color: @textlighter;
+}
+
+.labeltext() {
+	
+	padding: 1px 3px 2px;
+	.border-radius(@radius);
+	display: inline-block;
+}
+.yellowtext {
+	background-color: @yellow;
+	.labeltext;
+}
+.lightyellowtext {
+	background-color: @lightyellow;
+	.labeltext;
+}
+.redtext {
+	background-color: @red;
+	color: @inversecolor;
+	.labeltext;
+}
+.lightredtext {
+	background-color: @lightred;
+	color: @color;
+	.labeltext;
+}
+
+.greentext {
+	background-color: @green;
+	color: @textdark;
+	.labeltext;
+}
+.lightgreentext {
+	background-color: @lightgreen;
+	color: @textdark;
+	.labeltext;
+}
+.bluetext {
+	.labeltext;
+	background-color: @blue;
+	color: @inversecolor;
+}
+.lightbluetext {
+	.labeltext;
+	background-color: @lightblue;
+}
+.greytext {
+	background-color: @grey;
+	.labeltext;
+}
+.greydarktext {
+	background-color: @greydark;
+	color: #fff;
+	.labeltext;
+}
+.whitetext {
+	border: @boxborder solid @greynormal;
+	.labeltext;
+}
+.greynormaltext {
+	background-color: @greynormal;
+	.labeltext;
+}
+.box {
+	padding: @boxpadding;
+	.border-radius(@radius);
+	position: relative;
+	.box-sizing(border-box);
+}
+.yellowbox {
+	
+	color: @textdark;
+	background-color: @yellow;
+	.box;
+}
+.lightyellowbox {
+	color: @textdark;
+	background-color: @lightyellow;
+	.box;
+}
+
+.redbox {
+	background-color: @red;
+	color: @inversecolor;
+	.box;
+}
+.lightredbox {
+	background-color: @lightred;
+	color: @textdark;
+	.box;
+}
+.whitebox {
+	border: @boxborder solid @grey;
+	background-color: @inversecolor;
+	.box;
+}
+.greenbox {
+	background-color: @green;
+	color: @textdark;
+	.box;
+}
+.lightgreenbox {
+	background-color: @lightgreen;
+	color: @textdark;
+	.box;
+}
+.greybox {
+	background-color:@grey;
+	.box;
+}
+.whitedarkbox {
+	border: @boxborder solid @greydark;
+	background-color: @inversecolor;
+	.box;
+}
+.greydarkbox {
+	background-color:@greydark;
+	color: @inversecolor;
+	.box;
+	
+}
+.greynormalbox {
+	background-color:@greynormal;
+	.box;
+}
+.whitenormalbox {
+	border: @boxborder solid @greynormal;
+	background-color: @inversecolor;
+	.box;
+}
+.bluebox {
+	.box;
+	background-color: @blue;
+	color: @inversecolor;
+
+}
+.lightbluebox {
+	.box;
+	background-color: @lightblue;
+}
+
+
+
+/* mixed content*/
+.ltr {
+	font-family: @fontface;
+	direction: ltr;
+}
+.ar {
+	font-family: @arfontface;
+	direction: rtl;
+}
+
+
+/* HTML tags redefined */
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+}
+a, .a { /* mimic a href */
+	color: @linkcolor;
+	text-decoration: none;
+	cursor: pointer;
+}
+/*camoflage a*/
+a.cam, .a.cam, .cam {
+	color: @color;
+	&:hover {color: @linkcolor;}
+	cursor: pointer;
+}
+a[rel="track"]:visited {
+	color:@visitedlinkcolor;
+}
+a:hover, a[rel="track"]:hover {
+	color: @altlinkcolor;
+}
+h1 a:visited {
+	/* only titles of items are tracked for visiting, other a hrefs are not tracked */
+	color:@visitedlinkcolor;
+}
+
+h1 {
+	#rem > .font-size(3.5 * @baseFontSize);
+	margin: 10px 0;
+	font-family: @lightfontface;
+	font-weight: lighter;
+}
+h2 {
+	#rem > .font-size(3 * @baseFontSize);
+	font-family: @lightfontface;
+	font-weight: 300;
+}
+h3 {
+	#rem > .font-size(2.5 * @baseFontSize);
+	font-family: @lightfontface;
+	font-weight: 300;
+}
+h4 {
+	#rem > .font-size(2 * @baseFontSize);
+	font-family: @lightfontface;
+	font-weight: 300;
+}
+h5 {
+	#rem > .font-size(1.5 * @baseFontSize);
+	font-family: @lightfontface;
+	font-weight: 300;
+	
+}
+h6 {
+	#rem > .font-size(@baseFontSize);
+}
+.hsub {
+	font-size: 70%;
+}
+
+p.normal, .normal p, .normal {
+	#rem > .font-size(@baseFontSize)!important;
+	font-family: @fontface;
+}
+ul.normal>li, .normal>ul>li{
+	margin-left: 15px;
+	list-style-type: disc;
+}
+.ar ul.normal>li, .ar .normal>ul>li {
+	margin-left: 0;
+	margin-right: 15px;
+}
+ol.normal {
+	padding-left: 25px;
+}
+ol.normal>li {
+	list-style-type: decimal;
+	list-style-position: outside;
+}
+.ar ol.normal {
+	padding-left: 0;
+	padding-right: 25px;
+}
+/**** nested lists for multiple uls */
+ul.nestedlist>li>ul, div.nestedlist>ul, ol.nestedlist>li>ol {
+	padding-left: 15px;
+}
+
+
+sup {
+	font-size: 70%;
+	vertical-align: 4px;
+}
+
+
+del {
+	color: @textlight;
+	text-decoration: line-through;
+}
+mark {
+	background-color: @hilite;
+}
+
+.ellipsis(){
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

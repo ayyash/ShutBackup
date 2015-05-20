@@ -1,0 +1,42 @@
+﻿@gridColumns: 8;
+
+
+.page {
+   .sitewidth(@gridColumns);	
+}
+.singlepage {
+   .sitewidth(8);	
+}
+
+
+.mobilelist {
+	display: block;
+}
+
+
+.c8, .u8>li { .columns(8); }
+.c9, .u9>li { .columns(9); }
+
+.t8 { .columns(8,20); }
+.t9 { .columns(9,20); }
+
+
+.off6 { .marginshift(6); }
+.off7 { .marginshift(7); }
+.off8, .off9, .off10, .off11  { .marginshift(8); }
+
+.cl5 { .cell(5); }
+
+.detailed dd,
+.detailed fieldset > .stack,
+.detailed > .stack {
+	padding-left: (@gridColumnWidth + @gridGutterWidth) * 2;
+}
+
+.widewindow {
+	.columns(@gridColumns);
+}
+
+.www4 {
+	display: block;
+}

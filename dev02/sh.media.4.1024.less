@@ -1,0 +1,46 @@
+﻿/* media max-width 980 px  dynamic width for most screens */
+
+@gridColumns: 12;
+
+
+.page {
+	 .sitewidth(@gridColumns); // 940 px enough for 12 columns without external pads
+
+}
+.c10, .u10>li { .columns(10); }
+.c11, .u11>li { .columns(11); }
+.c12, .u12>li { .columns(12); }
+
+.t10 { .columns(10,20); }
+.t11 { .columns(11,20); }
+.t12 { .columns(12,20); }
+
+.off9 { .marginshift(9	); }
+.off10 { .marginshift(10); }
+.off11 { .marginshift(11); }
+
+.cl6 { .cell(6); }
+.cl7 { .cell(7); }
+.cl8 { .cell(8); }
+.cl9 { .cell(9); }
+.cl10 { .cell(10); }
+.cl11 { .cell(11); }
+.cl12 { .cell(12); }
+
+
+.gcl5  { .gridcell(5); }
+.gcl6  { .gridcell(6); }
+.gcl7  { .gridcell(7); }
+.gcl8  { .gridcell(8); }
+.gcl9  { .gridcell(9); }
+.gcl10  { .gridcell(10); }
+.gcl11  { .gridcell(11); }
+.gcl12  { .gridcell(12); }
+
+.widewindow {
+	.columns(11);
+}
+
+.www3 {
+	display: block;
+}

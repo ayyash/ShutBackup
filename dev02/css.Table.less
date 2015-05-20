@@ -1,0 +1,50 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+/* table cells*/
+.cl1 { .cell(1); }
+.cl2  { .cell(2); }
+.cl3  { .cell(3); }
+.cl4  { .cell(4); }
+.cl5,.cl6,.cl7,.cl8,.cl9, .cl10 ,cl11, .cl12 {.cell(1)};
+/* cells with gutters */
+.gcl1  { .gridcell(1); }
+.gcl2  { .gridcell(2); }
+.gcl3  { .gridcell(3); }
+.gcl4  { .gridcell(4); }
+.gcl5, .gcl6, .gcl7, .gcl8, .gcl9, .gcl10, .gcl11, .gcl12  { .gridcell(1); }
+
+
+
+table {
+	border-collapse: collapse;
+	border-spacing:0;
+	th, td {
+		vertical-align: top;
+	}
+	th {
+		text-align: left;
+	}
+	&.txtr th, th.txtr {
+		text-align: right;
+	}
+	caption {text-align: left;}
+}
+
+table.tabulated {
+	th {
+		padding-bottom: 2px;
+		border-bottom: 1px solid @greydark;
+	}
+	td {
+		padding: 2px 0;
+		border-bottom: 1px solid @grey;
+	}
+}
+/* dont have tables within tables*/
+table.spacedout {
+	td, th {padding: 10px;}
+}
+table.bordered {
+	td, th {border:1px solid @grey;}
+}

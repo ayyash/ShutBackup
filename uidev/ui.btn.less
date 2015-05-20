@@ -1,0 +1,120 @@
+﻿/// <reference path="x_imports.less" />
+button {
+	border:0;
+	background-color: transparent;
+	
+}
+
+.btn,
+.btnrev,
+.btndiff {
+	padding: 10px 15px;
+	position: relative;
+	display: inline-block;
+	.transition(background-color .518s);
+	line-height: 1;
+	.border-radius(@radius);
+	cursor: pointer;
+	border: 0;
+	-webkit-appearance: none;
+
+	&.loadings {
+		background-position: center top !important;
+	}
+}
+
+.btn {
+	color: @linkcolor;
+	background-color: @grey;
+
+	&:hover {
+		background-color: fade(@grey,50);
+		.box-shadow(0 1px 2px -1px rgba(0, 0, 0, 0.5));
+	}
+}
+
+.btnrev {
+	color: @inversecolor;
+	background-color: @linkcolor;
+	.gradient(lighten(@linkcolor,1),0%, @linkcolor, 100%);
+
+	&:hover {
+		background-color: lighten(@linkcolor,5);
+		.gradient(lighten(@linkcolor,10),0%, lighten(@linkcolor,5), 100%);
+		color: @inversecolor !important;
+	}
+}
+
+.btndiff {
+	background-color: @red;
+	color: @inversecolor;
+
+	&:hover {
+		background-color: darken(@red,20);
+	}
+}
+
+.btngreen {
+	background-color: @green;
+	color: @inversecolor;
+
+	&:hover {
+		background-color: lighten(@green,30);
+	}
+}
+.btnaction {
+	.roundbtn;
+	.changeSymbol(@icon-arrow-right);
+	font-size: 200%;
+	margin-right: 10px;	
+}
+
+.btnsm {
+	padding: 5px 10px;
+}
+
+/* ICONATE THIS */
+
+
+.squarebtn {
+	width: 30px;
+	height: 30px;
+	line-height: 1;
+	vertical-align: middle;
+	text-align: center;
+	
+	&:before {
+		margin: 0;
+		line-height: 1;
+		position: relative;
+	}
+
+	
+}
+
+
+.roundbtn {
+	.symbol;
+	.base;
+	line-height: 1;
+	vertical-align: middle;
+	
+	&:after {
+		margin-left: -1em;
+	}
+}
+.solidbtn {
+	.symbol;
+	.basedark;
+	line-height: 1;
+	vertical-align: middle;
+	
+	&:after {
+		margin-left: -1em;
+	}
+	&:before {
+		color: @inversecolor;
+		position: relative;
+	}
+	
+}

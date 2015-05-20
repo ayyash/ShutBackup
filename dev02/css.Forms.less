@@ -1,0 +1,212 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+/****************TODO: remove project specific **************/
+
+
+.input() {
+	/* used to mimic the text input for regular text */
+	border: 1px solid @greynormal;
+	padding: 5px 0 5px 3px;
+	.box-sizing(border-box);
+	.border-radius(@radius);
+	background-repeat: no-repeat;
+	background-position: right center;
+}
+/* form fields */
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="time"],
+input[type*="date"],
+input[type="number"],
+input[type="password"],
+textarea,
+select,
+.mimictextinput {
+	.input();
+
+	&:focus + span.req {
+		display: none;
+	}
+}
+
+input[type="file"] {
+	.input();
+	background-color: #fff;
+	padding: 2px;
+}
+
+input:-ms-input-placeholder {
+	color: @textlight;
+}
+
+input::-webkit-input-placeholder {
+	color: @textlight;
+}
+
+input:-moz-placeholder {
+	color: @textlight;
+}
+
+input::-moz-placeholder {
+	color: @textlight;
+}
+
+
+.mimictextinput {
+	overflow: auto;
+}
+
+
+/* Validation field Wrapper */
+.wrapvld {
+	position: relative;
+	display: inline-block; /*keep an eye*/
+}
+
+.wrap100 .wrapvld {
+	display: block;
+}
+
+.wrapvld .ar {
+	text-indent: 20px;
+}
+
+/* Required asterick */
+span.req {
+	display: inline-block;
+	position: absolute;
+	right: 5px;
+	top: 0;
+
+	&:after {
+		display: block;
+		content: "*";
+		#rem > .font-size(1.8);
+		font-weight: bold;
+		line-height: 1.5;
+		color: @red;
+	}
+}
+
+/* for TallField */
+.clearit + span.req {
+	display: none;
+}
+
+
+/* error */
+input.error, textarea.error, select.error,
+label.error, span.error, div.error {
+	border-color: @red;
+	background-color: @lightred;
+}
+
+/* error label appearing next or around field on error */
+.errlabel {
+	background-color: @red;
+	color: #fff;
+	.smaller;
+	position: absolute;
+	bottom: -18px;
+	left: 5px;
+	z-index: 1000;
+	border-radius: @radius;
+	padding: 2px 5px;
+	white-space: nowrap;
+
+	&:before {
+		border-color: @red;
+		content: "";
+		display: inline-block;
+		height: 0;
+		width: 0;
+		position: absolute;
+		#arrow > .above(4px);
+	}
+}
+/* horizontal label appears next to field */
+.herrlabel {
+	background-color: @red;
+	color: #fff;
+	.smaller;
+	position: absolute;
+	top: 0;
+	right: -54px;
+	z-index: 1000;
+	border-radius: @radius;
+	padding: 7px 5px;
+	white-space: nowrap;
+
+	&:before {
+		border-color: @red;
+		content: "";
+		display: inline-block;
+		height: 0;
+		width: 0;
+		position: absolute;
+		#arrow > .left(4px);
+	}
+}
+
+.cerrlabel {
+	/* custome error label used with ValudCustom*/
+	.redtext;
+	.smaller;
+	.block;
+}
+
+/* for non required fields */
+.errlabel.unlabel {
+}
+
+/* display badge for general errors */
+.vsticker {
+	.yellowtext;
+	.smaller;
+}
+
+
+
+.checkbox, .radio {
+	
+	padding-left: 25px;
+	min-height: 21px;
+	position: relative;
+	margin-bottom: 1px;
+	cursor: pointer;
+	overflow: hidden; /* why did i remove this!*/
+	input[type="checkbox"],input[type="radio"] {
+		position: absolute;
+		left: -1000px;
+		top: -30px;
+		
+	}
+
+	&:before {
+		border: 1px solid @grey;	
+		content: " ";
+		height: 20px;
+		width: 20px;
+		left: 0;
+		position: absolute;
+		top: 1px;
+			
+		.box-sizing(border-box);
+	}
+
+	&.checked:before {
+		border-width: 5px;
+		/* framework*/
+	}
+	
+}
+.radio {
+	
+
+	&:before {
+		border-radius: 50%;
+	}
+
+}

@@ -1,0 +1,40 @@
+﻿/// <reference path="sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+
+@media rtl {
+	body, textarea, select, option, input 
+	{
+		font-family: @arfontface;
+	}
+	
+	.lightfont
+	{
+		font-family: @arlightfontface;
+	}
+	 .page, .singlepage, div.poppage  {
+		direction:rtl;
+		
+	}
+	h1,h2,h3,h4, h5 {
+		font-family: @arlightfontface;
+		font-weight: normal;
+	}
+	
+	p.normal, .normal p, .normal {
+		
+		font-family: @arfontface;
+	}
+	.directionwrapper {
+		#jqmContent {
+			direction: rtl;
+
+		}
+	}
+	.shortwindow #jqmContent {
+		height: auto;
+	}
+	textarea {
+		overflow-x: hidden; /*watch*/
+	}
+}

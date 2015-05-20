@@ -1,0 +1,367 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+.columns(@columnSpan: 1, @shift: 0) {
+	width: (@gridColumnWidth + @gridGutterWidth) * @columnSpan - @shift;
+}
+
+.rcolumns(@columnSpan: 1, @shift: 0) {
+	width: percentage((@columnSpan/@wrapper)) - @shift;
+}
+
+.rows(@rowSpan: 1, @shift: 0) {
+	height: (@gridColumnWidth + @gridGutterWidth ) * @rowSpan - @shift;
+}
+/* changed */
+.padshift(@columnSpan: 1, @shift: 0) {
+	
+	padding-left: (@gridColumnWidth + @gridGutterWidth) * @columnSpan + @shift;
+}
+	/* changed, make marginshift whole columns along with gutters so that the beginning starts at anew column */
+.marginshift(@columnSpan: 1, @shift: 0) {
+
+	margin-left: (@gridColumnWidth + @gridGutterWidth) * @columnSpan + @shift;
+}
+
+.rmarginshift(@columnSpan: 1, @shift: 0) {
+	margin-left: percentage((@columnSpan/@wrapper)) + @shift;
+}
+
+.minheight(@rowSpan: 1, @shift: 0) {
+	min-height: (@gridColumnWidth + @gridGutterWidth) * @rowSpan - @shift;
+}
+
+.maxheight(@rowSpan: 1, @shift: 0) {
+	max-height: ( @gridColumnWidth + @gridGutterWidth)* @rowSpan - @shift;
+}
+	/* table cells dont have gutters, and they dont follow the same grid rules, but having general templates is helpful */
+.cell(@columnSpan: 1, @shift: 0) {
+
+	width: (@gridColumnWidth * @columnSpan - @shift);
+}
+
+.gridcell(@columnSpan: 1, @shift: 0) {
+	width: ((@gridColumnWidth + @gridGutterWidth) * @columnSpan - @shift);
+}
+
+.sitewidth(@gridColumns) {
+	width: (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1));
+}
+
+.colsize(@columnSpan: 1, @shift: 0) {
+	@colsize: ((@gridColumnWidth * @columnSpan) + (@gridGutterWidth * (@columnSpan - 1)) - @shift);
+}
+
+.col() {
+	float: left;
+	display: inline-block;
+	padding-right: @gridGutterWidth/2;
+	padding-left: @gridGutterWidth/2;
+	.box-sizing(border-box);
+}
+
+.rescol(@gutWidth: @gridGutterWidth) {
+	float: left;
+	display: inline-block;
+	padding-right: @gutWidth/2;
+	padding-left: @gutWidth/2;
+	.box-sizing(border-box);
+}
+/* grid layout */
+
+/***** column based grids */
+.incols {
+	margin-right: -1 * @gridGutterWidth / 2;
+	margin-left: -1 * @gridGutterWidth / 2;
+	.clearfix();
+
+	.col, > li {
+		.col();
+	}
+}
+
+/* responsive */
+.rescols(@gutWidth: @gridGutterWidth) {
+	margin-right: -1 * @gutWidth / 2;
+	margin-left: -1 * @gutWidth / 2;
+	.clearfix();
+
+	.rcol, .col, > li {
+		.rescol(@gutWidth);
+	}
+}
+
+.rcols {
+	.rescols;
+}
+
+/* simple */
+.scols {
+	.clearfix();
+
+	.rcol, .col, > li {
+		float: left;
+		display: inline-block;
+		.box-sizing(border-box);
+	}
+}
+/* 12 gird base */
+
+.w100 {
+	width: 100%;
+}
+
+.p100 {
+	padding: @extraSpace;
+}
+/* grids with paddinggs */
+.up > li {
+	.box;
+}
+
+.c1, .u1 > li {
+	.columns(1);
+}
+
+.c2, .u2 > li {
+	.columns(2);
+}
+
+.c3, .u3 > li {
+	.columns(3);
+}
+
+.c4, .u4 > li {
+	.columns(4);
+}
+
+.c5, .u5 > li,
+.c6, .u6 > li,
+.c7, .u7 > li,
+.c8, .u8 > li,
+.c9, .u9 > li,
+.c10, .u10 > li,
+.c11, .u11 > li,
+.c12, .u12 > li {
+	width: 100%;
+}
+
+/* text input */
+.t1 {
+	.columns(1,20);
+}
+
+.t2 {
+	.columns(2,20);
+}
+
+.t3 {
+	.columns(3,20);
+}
+
+.t4 {
+	.columns(4,20);
+}
+
+.t5,
+.t6,
+.t7,
+.t8,
+.t9,
+.t10,
+.t11,
+.t12 {
+	width: 100%;
+}
+/* responsive grid*/
+.r1, .ur1 > li {
+	.rcolumns(1);
+}
+
+.r2, .ur2 > li {
+	.rcolumns(2);
+}
+
+.r3, .ur3 > li {
+	.rcolumns(3);
+}
+
+.r4, .ur4 > li {
+	.rcolumns(4);
+}
+
+.r5, .ur5 > li {
+	.rcolumns(5);
+}
+
+.r6, .ur6 > li {
+	.rcolumns(6);
+}
+
+.r7, .ur7 > li {
+	.rcolumns(7);
+}
+
+.r8, .ur8 > li {
+	.rcolumns(8);
+}
+
+.r9, .ur9 > li {
+	.rcolumns(9);
+}
+
+.r10, .ur10 > li {
+	.rcolumns(10);
+}
+
+.r11, .ur11 > li {
+	.rcolumns(11);
+}
+
+.r12, .ur12 > li {
+	.rcolumns(12);
+}
+
+/* relative offsets*/
+.roff1 {
+	.rmarginshift(1);
+}
+
+.roff2 {
+	.rmarginshift(2);
+}
+
+.roff3 {
+	.rmarginshift(3);
+}
+
+.roff4 {
+	.rmarginshift(4);
+}
+
+.roff5 {
+	.rmarginshift(5);
+}
+
+.roff6 {
+	.rmarginshift(6);
+}
+
+.roff7 {
+	.rmarginshift(7);
+}
+
+.roff8 {
+	.rmarginshift(8);
+}
+
+.roff9 {
+	.rmarginshift(9);
+}
+
+.roff10 {
+	.rmarginshift(10);
+}
+
+.roff11 {
+	.rmarginshift(11);
+}
+
+/* min heights */
+.h1, .uh1 > li {
+	.minheight(1);
+}
+
+.h2, .uh2 > li {
+	.minheight(2);
+}
+
+.h3, .uh3 > li {
+	.minheight(3);
+}
+
+.h4, .uh4 > li {
+	.minheight(4);
+}
+
+.h5, .uh5 > li {
+	.minheight(5);
+}
+
+.h6, .uh6 > li {
+	.minheight(6);
+}
+
+.h7, .uh7 > li {
+	.minheight(7);
+}
+
+.h8, .uh8 > li {
+	.minheight(8);
+}
+
+.h9, .uh9 > li {
+	.minheight(9);
+}
+
+.h10, .uh10 > li {
+	.minheight(10);
+}
+
+.h11, .uh11 > li {
+	.minheight(11);
+}
+
+.h12, .uh12 > li {
+	.minheight(12);
+}
+
+
+/* fixed maximum height */
+.hm1, .uhm1 > li {
+	.maxheight(1);
+}
+
+.hm2, .uhm2 > li {
+	.maxheight(2);
+}
+
+.hm3, .uhm3 > li {
+	.maxheight(3);
+}
+
+.hm4, .uhm4 > li {
+	.maxheight(4);
+}
+
+.hm5, .uhm5 > li {
+	.maxheight(5);
+}
+
+.hm6, .uhm6 > li {
+	.maxheight(6);
+}
+
+.hm7, .uhm7 > li {
+	.maxheight(7);
+}
+
+.hm8, .uhm8 > li {
+	.maxheight(8);
+}
+
+.hm9, .uhm9 > li {
+	.maxheight(9);
+}
+
+.hm10, .uhm10 > li {
+	.maxheight(10);
+}
+
+.hm11, .uhm11 > li {
+	.maxheight(11);
+}
+
+.hm12, .uhm12 > li {
+	.maxheight(12);
+}

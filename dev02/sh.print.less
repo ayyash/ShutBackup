@@ -1,0 +1,40 @@
+﻿body, textarea, select, option, input 
+{
+	font-family: @fontface;
+	font-size: 80%; /* assuming default browser to medium 16px */
+	color: #000;
+	
+}
+
+
+.forprint {display: inline-block!important; }
+.forscreen { display: none!important;}
+@page {
+	margin: 0.3cm;
+}
+.pagebreak {
+	page-break-before: always;
+}
+.head, footer {
+	display: none!important;
+}
+div.wrapper {
+	padding-left: 0!important;
+	width: auto;
+}
+a, .a {
+	color: #333;
+}
+
+/* fix tab list contract */
+.subclienttabs .tabtitle {
+	display: block;
+	.bthick;
+}
+.tabs {
+	display: none;
+}
+.subclienttabs {
+	display: block!important;
+	page-break-before: always;
+}

@@ -1,0 +1,154 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+
+.cf {
+	.clearfix();
+}
+.clear{
+	clear: both;
+}
+.txtr {
+	text-align: right;
+}
+.txtc {
+	text-align: center;
+}
+.wrap {
+	word-wrap: break-word;
+}
+.breath, ul.breath>li, ol.breath>li {
+	padding-top: @extraSpace;
+	padding-bottom:@extraSpace;
+}
+.spaced, ul.spaced>li, ol.spaced>li  {
+	margin-bottom: @extraSpace;
+}
+.rbreath {
+	padding-right: @extraSpace;
+}
+.lbreath {
+	padding-left: @extraSpace;
+}
+.padtop {
+	padding-top: @extraSpace; /* to be used only in extreme cases */
+}
+.margintop {
+	margin-top: @extraSpace;  /* to be used only in extreme cases */
+}
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.hidden {
+	display: none;
+}
+summary {
+  cursor: pointer;
+}
+summary::-webkit-details-marker {
+  display: none
+}
+summary:before {
+  
+  content: "+"; 
+ 
+  font-size: 1.2em; 
+  font-weight: bold; 
+  width: 20px;
+  padding: 0; 
+  display: inline-block;
+  
+}
+details[open] summary:before {
+  content: "-";
+}
+details[open] summary {
+	margin-bottom: 10px;
+}
+
+
+
+::-moz-selection { background: @hilite; color: @color; text-shadow: none; }
+::selection		{  background: @hilite; color: @color; text-shadow: none; }
+
+/*blockquote {
+	margin-bottom: 10px;
+	border-left: 3px solid @greynormal;
+	padding: 2px 0 2px 10px;
+	position: relative;
+	margin-left: 20px;
+	&:before {
+		content: "\201F";
+		font-family:"Time New Roman";
+		left: -25px;
+		position: absolute;
+		top: 0;
+		font-size: 250%;
+		color: @greynormal;
+	}
+	cite {
+		color: @textlight;
+		&:before {
+			content: "\2014";
+		}
+	}
+
+	p {
+		margin: 0;
+	}
+}*/
+
+
+// added oct 28, close label class for shError
+.closelabel {
+	display: inline-block;
+	position: absolute;
+	right: 25px;
+	top: 35%;
+	.smaller;
+	.a;
+}
+
+
+/*********** borders */
+.bthin {
+	border-bottom: 1px solid;
+	padding-bottom: 15px;
+}
+.bthick {
+	border-bottom: 3px solid;
+	padding-bottom: 15px;
+}
+
+
+
+/**** comma seperated items */
+ul.commasep li {
+	display: inline-block;
+	border-bottom:1px solid @inversecolor;
+}
+ul.commasep li:after{
+	content: ", ";
+}
+ul.commasep li:last-child:after{
+	content: "";
+}
+/***** table list is sed for displaying custom fields values */
+
+.tablelist>li {
+	margin-bottom: 20px;
+	padding-left: (@gridColumnWidth  + @gridGutterWidth) * 2;
+}
+.tablelist>li>h6 {
+	float: left;
+	.columns(2);
+	margin-left: (@gridColumnWidth + @gridGutterWidth) * -2;
+
+}

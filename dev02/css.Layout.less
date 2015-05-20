@@ -1,0 +1,158 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+/* layout */
+.page {
+  
+	margin: 0 auto;
+	position: relative;
+}
+.singlepage {
+   .box-sizing(border-box);
+	margin: 0 auto;
+	position: relative;
+}
+.contentwrapper {
+	padding: @mainpad;
+}
+
+header {
+	position: absolute;
+	top: 0;	
+	width: 100%;
+}
+
+div.poppage {
+	margin: 0 auto;
+	position: relative;
+	.box-sizing(border-box);
+}	
+
+h1.sitelogo {
+	display: block;
+	a {
+		display: block;
+		text-indent: -4000px;
+		z-index:4999;
+		overflow: hidden;
+	}
+	float: left;
+}
+.mobilenav {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+
+
+/**** top area */
+header  nav.tools {
+	
+
+	>ul, >ul > li {
+		display: inline-block;
+	}
+}
+header nav.main {
+	>ul, >ul > li {
+		display: inline-block;
+	}
+	
+}
+/* navigation */
+nav ul li a {
+	padding: @extraSpace/2;
+	margin-bottom: 1px;
+	display: block;
+}
+
+section {
+	margin-bottom: 20px;
+}
+
+
+p {
+	margin-bottom: @extraSpace;
+}
+
+
+/* lightboxes */
+.dialog, .dialogcontent {
+	.columns(7);
+	height: 300px;
+	
+	display: none;
+	position: fixed;
+    top: 10%;
+	z-index: 5000;
+	/*.box-shadow-2(inset 0 0 3px rgba(0,0,0, 0.9), 0 0 10px rgba(0,0,0, 0.9));*/
+	
+	.border-radius(@radius);
+	left: 50%;
+	background-color:@inversecolor;
+	padding: 5px;
+	
+	
+}
+.dialogcontent {
+	background-color:@inversecolor;
+	padding: 5px;
+}
+
+.widewindow {
+	width: 95%;
+}
+.tallwindow {
+	height: 80%;
+}
+.respwindow {
+	width: 95%!important;
+}
+.tightwindow {
+	.columns(3);
+}
+.shortwindow {
+	height: 300px; 
+}
+.autowindow { /* use this with ajaxed content only */
+	min-height: 120px;
+	height: auto;
+}
+h3.jqmTitle {
+	
+	.border-radius(@radius);
+}
+.jqmOverlay { background-color: rgba(0,0,0,0.8); }
+
+#jqmContent {
+	 width:100%; min-height:90%; 
+	 display: block; clear:both; margin:auto; overflow-y: auto;
+	 overflow-x: hidden;
+}
+.directionwrapper {
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 90%;
+
+	#jqmContent {
+		overflow-y:  hidden;
+		overflow-x: hidden;
+		/*height: 100%;*/
+	}
+}
+.shortwindow #jqmContent { 
+	height: 90%;
+}
+.dialog div.loading {
+	padding: 35px;
+	width: 30px;
+	margin: auto;
+	#rem > .font-size(1.8);
+	
+	background-color: @inversecolor;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+

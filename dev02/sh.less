@@ -1,0 +1,86 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+
+
+html {
+	font-size: 62.5%;
+}
+/* resetting */
+.reset();
+
+
+/* GRID */
+@import url('@{shut-url}css.Grid.less');
+
+/* Layout  */
+@import url('@{shut-url}css.Layout.less');
+
+/*Typography */
+@import url('@{shut-url}css.Type.less');
+
+/*General */
+@import url('@{shut-url}css.General.less');
+
+
+/* Baloons */
+@import url('@{shut-url}css.Balloons.less');
+
+/* ExpandList behavior styles */
+@import url('@{shut-url}css.ExpandList.less');
+
+/* Forms */
+@import url('@{shut-url}css.Forms.less');
+
+
+/* stacks, overview, and detailed layouts */
+@import url('@{shut-url}css.Stack.less');
+
+
+/* tables and reports general  */
+@import url('@{shut-url}css.Table.less');
+
+
+/******* screen vs print **********/
+@media screen {
+	.forprint { display: none!important;}
+	.forscreen { }
+}
+
+
+/*********************Important****************************/
+
+.inline {
+	display: inline!important;
+}
+.block {
+	display: block!important;
+}
+
+.nobold {
+	font-weight: normal!important;
+}
+
+.fhidden {
+	display: none!important; /* this will never be shown not even by js */
+}
+
+/* developer notes */
+.dev {
+	font: 10px Tahoma!important;
+	color: red!important;
+	background-color: Yellow!important;
+	display: inline!important;
+}
+.devgreygb .incols, .devgreygb .rcols {
+	margin-bottom: 20px;
+}
+.devgreygb .col, .devgreygb .rcol {
+	background-color: #eee;
+	border-right: 1px solid #ccc;
+
+}
+
+.www1, .www2,.www3, .www4,.www5, .www6 {
+	display: none;
+}

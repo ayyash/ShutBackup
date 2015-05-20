@@ -1,0 +1,344 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+
+
+.clearfix() {
+  zoom: 1;
+	&:before,
+	 &:after {
+		content:"";
+		display:block;
+		zoom: 1;
+		*display: inline;
+	}
+	&:after {
+		clear: both;
+	}
+}
+
+.reset(){
+	
+	*{
+		margin: 0;
+		padding: 0;
+	}
+
+	ul, li
+	{
+		list-style: none;	
+	}
+	fieldset, form, iframe
+	{
+		border: 0;
+	
+	}
+	textarea {
+		overflow: auto;
+	}
+	em {
+		font-style: normal;
+	}
+	img {
+		border: 0 none;
+		-moz-user-select: none; 
+		-khtml-user-select: none;
+	}
+	abbr,article,aside,audio,canvas,datalist,details,
+	figure,footer,header,hgroup,menu,meter,nav,output,
+	progress,section,summary,time,video {
+		display: block;
+	}
+	time, mark {
+		display: inline;
+	}
+	form {display: inline;}
+}
+
+/* Border Radius*/
+.border-radius(@radius: 2px) {
+  #border-radius > .all(@radius);
+}
+#border-radius {
+	.all (@radius: 2px){
+		-webkit-border-radius: @radius;
+		-moz-border-radius: @radius;
+		border-radius: @radius;
+	}
+	.topright(@radius:2px){
+		-webkit-border-top-right-radius: @radius;
+		-moz-border-radius-topright: @radius;
+		border-top-right-radius: @radius;
+	}
+	.topleft(@radius:2px){
+		-webkit-border-top-left-radius: @radius;
+		-moz-border-radius-topleft: @radius;
+		border-top-left-radius: @radius;
+	}
+	.bottomright(@radius:2px){
+		-webkit-border-bottom-right-radius: @radius;
+		-moz-border-radius-bottomright: @radius;
+		border-bottom-right-radius: @radius;
+	}
+	.bottomleft(@radius:2px){
+		-webkit-border-bottom-left-radius: @radius;
+		-moz-border-radius-bottomleft: @radius;
+		border-bottom-left-radius: @radius;
+	}
+}
+/* Drop shadows*/
+.box-shadow-2(@shadow: 0 1px 3px rgba(0,0,0,.25), @shadow2) {
+  -webkit-box-shadow: @shadow, @shadow2;
+     -moz-box-shadow: @shadow, @shadow2;
+          box-shadow: @shadow, @shadow2;
+}
+.box-shadow(@shadow) {
+  -webkit-box-shadow: @shadow;
+     -moz-box-shadow: @shadow;
+	  -ms-box-shadow: @shadow;
+          box-shadow: @shadow;
+	
+}
+.box-sizing(@sizing) {
+	-moz-box-sizing: @sizing;
+	box-sizing: @sizing;
+}
+.transition(@transition) {
+	-webkit-transition: @transition;
+	   -moz-transition: @transition;
+ 	    -ms-transition: @transition;
+	     -o-transition: @transition;
+	        transition: @transition;
+}
+.transform(@transform) {
+	-webkit-transform: @transform;
+	   -moz-transform: @transform;
+ 	    -ms-transform: @transform;
+	     -o-transform: @transform;
+	        transform: @transform;
+	 
+}
+
+/* Opacity*/
+.opacity(@opacity: 100) {
+	filter: e(%("alpha(opacity=%d)", @opacity));
+	-khtml-opacity: @opacity / 100;
+	  -moz-opacity: @opacity / 100;
+	       opacity: @opacity / 100;
+}
+/* desaturation */
+.grayscale(@grayscale: 100%) {
+	
+	-webkit-filter: grayscale(@grayscale);
+	   -moz-filter: grayscale(@grayscale);
+ 	    -ms-filter: grayscale(@grayscale);
+	     -o-filter: grayscale(@grayscale);
+	        filter: grayscale(@grayscale);
+		 filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+		 	filter: gray;
+}
+
+.animation(@animation){
+    animation: @animation;
+    /* Safari and Chrome: */
+    -webkit-animation: @animation;
+}
+
+.gradient (@startColor, @startStop, @endColor, @endStop: 100%) {
+	
+	background-image: -webkit-linear-gradient(@startColor @startStop, @endColor @endStop); /* For Safari 5.1 to 6.0 */
+	background-image: -o-linear-gradient(@startColor  @startStop, @endColor @endStop); /* For Opera 11.1 to 12.0 */
+	background-image: -moz-linear-gradient(@startColor @startStop, @endColor @endStop); /* For Firefox 3.6 to 15 */
+	background-image: linear-gradient(@startColor @startStop, @endColor @endStop); /* Standard syntax */
+}
+.rotate(@deg, @origin: center center)   {
+    transform: rotate(@deg);
+    transform-origin:@origin;
+    -ms-transform: rotate(@deg); /* IE 9 */
+    -ms-transform-origin:@origin; /* IE 9 */
+    -webkit-transform: rotate(@deg); /* Safari and Chrome */
+    -webkit-transform-origin:@origin; /* Safari and Chrome */
+}
+.arrowreset() {
+	right: auto;
+	bottom: auto;
+	left: auto;
+	top: auto;
+	border: 1px solid;
+}
+
+#arrow {
+
+  .above(@arrowWidth: 5px) {
+	/* reset first */
+	left: 45%;
+    top: -@arrowWidth;
+	border-width:0 @arrowWidth @arrowWidth; 
+    border-style:solid;
+	border-top-color: transparent;
+    border-top-color: fadeout(#fff, 100%);
+	border-right-color: transparent;
+	border-right-color: fadeout(#fff, 100%);
+	border-left-color:transparent;
+	border-left-color:fadeout(#fff, 100%);
+	
+  }
+  .left(@arrowWidth: 5px) {
+    top: 30%;
+    left: -@arrowWidth - 1;
+	border-width: (@arrowWidth + 1); 
+	border-left-width: 0;
+    border-style:solid;
+	border-top-color: transparent;
+    border-top-color: fadeout(#fff, 100%);
+	border-bottom-color: transparent;
+	border-bottom-color:fadeout(#fff, 100%);
+	border-left-color: transparent;
+	border-left-color: fadeout(#fff, 100%);
+	
+  }
+  .below(@arrowWidth: 5px) {
+    left: 45%;
+    bottom: -@arrowWidth;
+	border-width:@arrowWidth @arrowWidth 0; 
+    border-style:solid;
+	border-right-color:transparent;
+	border-right-color:fadeout(#fff, 100%);
+	border-bottom-color:transparent;
+	border-bottom-color: fadeout(#fff, 100%);
+	border-left-color:transparent;
+	border-left-color: fadeout(#fff, 100%);
+	
+
+  }
+  .right(@arrowWidth: 5px) {
+    top: 30%;
+    right: -@arrowWidth;
+	border-width:@arrowWidth 0 @arrowWidth @arrowWidth; 
+    border-style:solid;
+	border-top-color: transparent;
+    border-top-color: fadeout(#fff, 100%);
+	border-right-color: transparent;
+	border-right-color: fadeout(#fff, 100%);
+	border-bottom-color: transparent;
+	border-bottom-color: fadeout(#fff, 100%);
+  }
+}
+
+#pointer {
+ .left(@arrowWidth: 6px){
+	margin-right: @arrowWidth + 2;
+	.arrowreset();
+	#arrow > .left(@arrowWidth);
+ }
+  .up(@arrowWidth: 6px){
+	margin-right: @arrowWidth + 2;
+	.arrowreset();
+	#arrow > .above(@arrowWidth);
+ } 
+ .down(@arrowWidth: 6px){
+	margin-right: @arrowWidth + 2;
+	.arrowreset();
+	#arrow > .below(@arrowWidth);
+ }
+  .right(@arrowWidth: 6px){
+	margin-right: @arrowWidth + 2;
+	.arrowreset();
+	#arrow > .right(@arrowWidth);
+ }
+  .diagonalupleft(@arrowWidth: 8px){
+	margin-right: @arrowWidth;
+	.arrowreset();
+	#arrow > .right(@arrowWidth);
+	border-top-width: 0;
+ }
+ .diagonalupright(@arrowWidth: 8px){
+	margin-right: @arrowWidth;
+	.arrowreset();
+	#arrow > .left(@arrowWidth);
+	border-top-width: 0;
+ }
+ .diagonaldownleft(@arrowWidth: 8px){
+	margin-right: @arrowWidth;
+	.arrowreset();
+	#arrow > .right(@arrowWidth);
+	border-bottom-width: 0;
+ }
+ .diagonaldownright(@arrowWidth: 8px){
+	margin-right: @arrowWidth;
+	/* reset */
+	.arrowreset();
+	#arrow > .left(@arrowWidth);
+	border-bottom-width: 0;
+ }
+}
+
+/*sprites */
+
+.sprite(@x, @y,@width, @height) {
+   background: url(../images/isprite.png) no-repeat left top;
+   background-position: -(@x*@spriteGrid) -(@y*@spriteGrid);
+   width: @width;
+   height: @height;
+}
+.spritePos(@x, @y){
+	background-position: -(@x*@spriteGrid) -(@y*@spriteGrid);
+}
+.spriteReplace (@x, @y, @width, @height) {
+   .sprite(@x, @y, @width, @height);
+	text-indent: -999em;
+   letter-spacing: -999em;
+   overflow: hidden;
+
+}
+
+/* rem */
+
+#rem {
+
+	.font-size(@value) {
+		font-size: @value * 10px;	
+	}
+
+	.font-size(@value) when (@rem-enabled) {
+		font-size: @value * 1rem;
+	}
+} 
+/* icons*/
+
+.symbolDef(){
+	font-family: @iconfont;
+	text-transform: none;
+	font-style: normal;
+	display: inline-block;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-smooth:always;
+}
+.design .symbol:before {
+	font-size: 1.6rem;
+}
+
+.icon(@name, @value) {
+	.@{name}{ &:before {content: @value;}}
+}
+
+.displaySymbol(@value){
+	/*this is for plain icons*/
+	content: @value; font-family: @iconfont;
+}
+.getSymbol(@value){
+	&:extend(.symbol all);
+	&:before {content: @value;}
+}
+.getSymbol(@value,@dir) when(@dir = "after") {
+	.symbolAfter;
+	&:after {content: @value;}
+}
+
+.changeSymbol(@value){
+	&:before {content: @value;}
+}
+
+.changeSymbol(@value,@dir) when(@dir = "after") {
+	&:after {content: @value;}
+}

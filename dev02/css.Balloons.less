@@ -1,0 +1,115 @@
+﻿/// <reference path="../uidev/sh.vars.less" />
+/// <reference path="sh.functions.less" />
+
+
+/* speech balloons and tips */
+.basicballoon {
+	position: relative;
+	
+	&:after {
+		content:"";
+		position:absolute;
+		display:block; 
+		height: 0;
+		width: 0;
+	}
+}
+.balloon {
+	.basicballoon;
+	
+	@border: 5px;
+	&.below { margin-bottom: @border * 2; }
+	&.above { margin-top: @border * 2 }
+	&.left { margin-left: @border * 2; }
+	&.right { margin-right: @border * 2; }
+
+	&.yellowbox:after {
+		border-color: @yellow;
+	}
+	&.redbox:after {
+		border-color: @red;
+	}
+	&.greenbox:after {
+		border-color: @green;
+	}
+
+	&.greybox:after {
+		border-color: @grey;	
+	}
+	&.whitebox:after {
+		border-color: @grey;
+	}
+	&.greydarkbox:after {
+		border-color: @greydark;
+	}
+	&.whitedarkbox:after {
+		border-color: @greydark;
+	}
+	&.below:after {#arrow > .below(@border); }
+	&.above:after { #arrow > .above(@border); }
+	&.left:after { #arrow > .left(@border); }
+	&.right:after { #arrow > .right(@border); }
+
+	&.whitebox,
+	&.whitedarkbox {
+		&.below:after {#arrow > .below(@border+3); }
+		&.above:after { #arrow > .above(@border+3); }
+		&.left:after { #arrow > .left(@border+3); }
+		&.right:after { #arrow > .right(@border+3); }
+	}
+}
+
+.b_balloon {
+	position: relative;
+	background-color: #fff;
+	@diameter: 10px;
+	@borderwidth: 2px;
+	border-width: @borderwidth;
+	
+	&:before {
+		content:"";
+		position:relative;
+		display:block; 
+		height: @diameter;
+		width: @diameter;
+		transform: rotate(45deg);
+		-ms-transform: rotate(45deg); /* IE 9 */
+		-webkit-transform: rotate(45deg); /* Safari and Chrome */
+		-o-transform: rotate(45deg); /* Opera */
+		-moz-transform: rotate(45deg); /* Firefox */
+		top: @diameter * -(0.7 + @borderwidth * 0.2);
+		margin: 0 auto (@diameter * -(0.7 + @borderwidth * 0.2));
+		z-index: 1;
+		background-color: #fff;
+		border: 2px solid @greydark;
+		border-width: @borderwidth 0 0 @borderwidth;
+	}
+
+}
+
+/********* pointers */
+
+.pd, .pu, .pr, .pl, .pdul, .pdur, .pddl, .pddr {
+	
+	border-color: @color;
+	&:before {
+		content:"";
+		display:inline-block; 
+		height: 0;
+		width: 0;
+		margin-bottom: 2px;
+	}
+}
+.pd:before		 { #pointer > .down(); }
+.pd.small:before { #pointer > .down(3px); }
+.pu:before		 { #pointer > .up(); }
+.pu.small:before { #pointer > .up(3px); }
+.pl:before		 { #pointer > .left(); margin-bottom: 1px;}
+.pl.small:before { #pointer > .left(3px); }
+.pr:before		 { #pointer > .right(); }
+.pr.small:before { #pointer > .right(3px); }
+.pdul:before		 { #pointer > .diagonalupleft(); }
+.pdur:before		 { #pointer > .diagonalupright(); }
+.pddl:before		 { #pointer > .diagonaldownleft(); }
+.pddr:before		 { #pointer > .diagonaldownright(); }
+
