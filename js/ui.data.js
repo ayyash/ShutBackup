@@ -83,7 +83,7 @@ var SiteDirection = "ltr";
 	
 		$.Sh.Date.defaults = {
 			dateFormat: "dd/mm/yy",
-			maxDaet: null,
+			maxDate: null,
 			minDate: null
 		};
 
