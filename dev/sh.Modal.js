@@ -386,9 +386,9 @@
 			target: this.data("target"),
 			ajaxText: String('<div class="loading">{0}</div>').format(this.data("loading-text")),
 			modal: this.data("ismodal"),
-			onShow: $.getEvent(this,"onshow"),
-			onHide: $.getEvent(this,"onhide"),
-			onLoad: $.getEvent(this, "onload"),
+			onShow: $.getFunction(this,"onshow"),
+			onHide: $.getFunction(this,"onhide"),
+			onLoad: $.getFunction(this, "onload"),
 			mode: this.data("mode")
 		};
 
@@ -535,7 +535,7 @@
 
 			// lend back and return false
 			
-			var onshow = $.getEvent($(hash.t), "onbeforeshow");
+			var onshow = $.getFunction($(hash.t), "onbeforeshow");
 			if (onshow && !onshow.call(hash)) return false;
 
 			// add overlay
@@ -606,7 +606,7 @@
 		onHide: function (hash) {
 
 			
-			var onhide = $.getEvent(hash.c.original, "onbeforehide");
+			var onhide = $.getFunction(hash.c.original, "onbeforehide");
 			if (onhide && !onhide.call(hash)) return false;
 			
 			
@@ -630,7 +630,7 @@
 				$.ShRewire(hash.w);
 			}
 
-			var onload = $.getEvent($(hash.t),"onafterload");
+			var onload = $.getFunction($(hash.t),"onafterload");
 			onload && onload.call(hash);
 
 		}

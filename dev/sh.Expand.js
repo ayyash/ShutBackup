@@ -7,12 +7,12 @@
 	$.Sh.Expands = function (options) {
 		// a bridge, set up options from data-
 		var _options = {
-			onInit: this.data("oninit"),
-			onShow: this.data("onshow"),
-			onHide: this.data("onhide"),
-			onToggle: this.data("ontoggle"),
-			onBeforeShow: this.data("onbeforeshow"), 
-			onBeforeHide: this.data("onbeforehide"),
+			onInit: $.getFunction(this,"oninit"),
+			onShow: $.getFunction(this,"onshow"),
+			onHide: $.getFunction(this, "onhide"),
+			onToggle: $.getFunction(this, "ontoggle"),
+			onBeforeShow: $.getFunction(this, "onbeforeshow"),
+			onBeforeHide: $.getFunction(this, "onbeforehide"),
 			guts: this.data("guts"),
 			src: this.data("hsrc"),
 			state: this.data("state"),
@@ -139,11 +139,12 @@
 						this.gutsElement.show();
 						break;
 				}
-
+				
 			}
 			// i think i should return if element is already visibt
 			this.options.state = "show";
-			this.options.onShow && this.options.onShow.call(this); // fire onshow anyway
+			
+			this.options.onShow && this.options.onShow.call(this); // fire onshow anyway // double check
 			return this;
 
 		},
@@ -155,7 +156,7 @@
 			} else {
 				this.show();
 			}
-
+			this.element.toggleClass(this.options.togglecss); // let user decide what initial state is
 			return this;
 
 		},
@@ -166,8 +167,8 @@
 				return this;
 			}
 
-			//if (this.options.state != null) {
-				this.options.onToggle && this.options.onToggle.call(this); // fire toggle
+			if (this.gutsElement.is(":visible")) {
+				this.options.onToggle && this.options.onToggle.call(this); // fire toggle, this shouldnt fire always
 				switch (this.options.effect) {
 					case "slide":
 						this.gutsElement.slideUp(100);
@@ -180,7 +181,7 @@
 						break;
 				}
 
-			//}
+			}
 			this.options.state = null;
 			this.options.onHide && this.options.onHide.call(this);
 			return this;
@@ -242,7 +243,7 @@
 				o.hide();
 			}
 		});
-		window.popbasket.push(this);
+		$.popbasket.push(this);
 
 		return o;
 	};
@@ -399,8 +400,8 @@
 		// exapnds, after adding group and guts
 
 		var _options = {
-			onSelect: $.getEvent(this,"onselect"),
-			onLoad: $.getEvent(this,"onload"),
+			onSelect: $.getFunction(this,"onselect"),
+			onLoad: $.getFunction(this,"onload"),
 			toggle: this.data("toggle"),
 			effect: this.data("effect"),
 			tabSelector: this.data("tabs"),

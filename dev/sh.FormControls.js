@@ -10,10 +10,10 @@
 		var _options = {
 			container: this.data('container'),
 			css: this.data('checked'),
-			onCheck: $.getEvent(this, "oncheck"),
-			onUncheck: $.getEvent(this, "onuncheck"),
-			onChange: $.getEvent(this, "onchange"),
-			onDblCheck: $.getEvent(this, "ondblcheck")
+			onCheck: $.getFunction(this, "oncheck"),
+			onUncheck: $.getFunction(this, "onuncheck"),
+			onChange: $.getFunction(this, "onchange"),
+			onDblCheck: $.getFunction(this, "ondblcheck")
 		};
 
 
@@ -133,8 +133,8 @@
 		// a bridge, set up options from data-
 		var _options = {
 			css: this.data("css"),
-			onCheck: $.getEvent(this, "oncheck"),
-			onUncheck: $.getEvent(this, "onuncheck")
+			onCheck: $.getFunction(this, "oncheck"),
+			onUncheck: $.getFunction(this, "onuncheck")
 		};
 
 

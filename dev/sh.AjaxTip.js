@@ -57,7 +57,7 @@
 
 		});
 
-		window.popbasket.push(this.element);
+		$.popbasket.push(this.element);
 
 		// initialize
 		this.init(options);

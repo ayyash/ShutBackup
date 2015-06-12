@@ -1,7 +1,10 @@
 ﻿
 
-// create a loop to extend $.fn with Sh functions?! am i an idiot?
-$(function () {
+
+(function ($) {
+	
+	// main definitions first
+
 	$.props._BehaviorsReady = false;
 
 	var getBehavior = function (o) {
@@ -9,11 +12,11 @@ $(function () {
 			if ($.Sh[o] && typeof ($.Sh[o]) == "function") {
 				// shplugin
 				return $.Sh[o];
-				
+
 			} else if (window[o] && typeof (window[o]) == "function") {
 				// temporarily. find function
 				return window[o];
-				
+
 			}
 			_debug(o, "Behavior is missing", "e");
 			return null;
@@ -24,7 +27,7 @@ $(function () {
 			return null;
 		}
 	};
-	$.getEvent = function ($context, fn) {
+	$.getFunction = function ($context, fn) {
 		var fn = $context.data(fn);
 
 		if (!fn || fn == null) return undefined;
@@ -37,7 +40,7 @@ $(function () {
 		return fn;
 	};
 	// document clicks
-	window.popbasket = [];
+	$.popbasket = [];
 
 	$.Behaviors = function (context, nonGreedy) {
 		// group data-behavior, and run functions with prepare-name of behavior
@@ -48,7 +51,7 @@ $(function () {
 		else
 			$allbehaviors = nonGreedy ? $("[data-behavior]", context) : jQuery.merge(context.filter("[data-behavior]"), $("[data-behavior]", context));
 
-	
+
 		$.each($allbehaviors, function (i, o) {
 			var $t = $(this);
 			// make multiple
@@ -56,7 +59,7 @@ $(function () {
 
 			$.each(fns, function (i, o) {
 				var b = getBehavior(o);
-				
+
 				b ? b.call($t) : null;
 			});
 		});
@@ -64,7 +67,6 @@ $(function () {
 		// also fire onbehaviors ready
 		$.props.$body.trigger("BehaviorsReady", [context]);
 
-		$.props._BehaviorsReady = true;
 	};
 
 
@@ -78,10 +80,10 @@ $(function () {
 		return this;
 	}
 
-	
+
 
 	$.ShRewire = function (context, nonGreedy) {
-		
+
 		$.Behaviors(context, nonGreedy);
 		// try in timeout for onload events
 
@@ -95,17 +97,30 @@ $(function () {
 		}
 	}
 
-	// initialize behaviors
-	$.Behaviors();
+	$.OnDocumentClick = function (element, fn) {
+		element.data("ondocumentclick", fn);
+		$.popbasket.push(element);
 
-	$.props.$body.on("click", function (e) {
-		// fire attached events
-		$.each(window.popbasket, function (i, o) {
-			var fn = o.data("ondocumentclick")
-			if (typeof (fn) == "function") {
-				fn.call(o, e);
-			}
+	};
+
+	// create a loop to extend $.fn with Sh functions?! am i an idiot?
+	$(function () {
+		// initialize behaviors
+		$.Behaviors();
+		$.props._BehaviorsReady = true;
+
+		$.props.$body.on("click", function (e) {
+			// fire attached events
+			$.each($.popbasket, function (i, o) {
+				var fn = $.getFunction(o,"ondocumentclick");//o.data("ondocumentclick");
+				fn && fn.call(o, e);
+				
+			});
 		});
+
 	});
 
-});
+
+
+})(jQuery);
+

@@ -815,11 +815,11 @@
 		
 		// get events from data objects, note to self, im using same names to prevent confusion instead of "onevent"
 		var _options = {
-			release:$.getEvent("release"),
-			change: $.getEvent("change"),
-			draw: $.getEvent("draw"),
-			cancel: $.getEvent("cancel"),
-			error: $.getEvent("error")
+			release:$.getFunction("release"),
+			change: $.getFunction("change"),
+			draw: $.getFunction("draw"),
+			cancel: $.getFunction("cancel"),
+			error: $.getFunction("error")
 		};
 	
 

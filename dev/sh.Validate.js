@@ -40,10 +40,10 @@
 		}
 		var _options = {
 			required: this.data("required"),
-			onshow: $.getEvent(this, "onshow"),
-			onload: $.getEvent(this, "onload"),
-			onhide: $.getEvent(this, "onhide"),
-			onvalidate: $.getEvent(this, "onvalidate"),
+			onshow: $.getFunction(this, "onshow"),
+			onload: $.getFunction(this, "onload"),
+			onhide: $.getFunction(this, "onhide"),
+			onvalidate: $.getFunction(this, "onvalidate"),
 			inputcss: this.data("inputcss"),
 			reqcss: this.data("reqcss"),
 			errlabelcss: this.data("errcss"),

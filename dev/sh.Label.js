@@ -17,9 +17,9 @@
 			which: this.data("which"), // added sept 23
 			showOnLoad: this.data("show-onload"),
 			valid: true, // mmm
-			onShow:  $.getEvent(this, "onshow"),
-			onLoad:  $.getEvent(this, "onload"),
-			onHide: $.getEvent(this, "onhide"),
+			onShow:  $.getFunction(this, "onshow"),
+			onLoad:  $.getFunction(this, "onload"),
+			onHide: $.getFunction(this, "onhide"),
 		};
 	
 		this.ShLabel($.extend(_options, options));

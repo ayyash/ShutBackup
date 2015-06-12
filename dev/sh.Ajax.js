@@ -41,13 +41,13 @@
 			data: this.data("params"),
 			dataType: this.data("datatype"),
 			contentType: this.data("contentype"),
-			onload: $.getEvent(this, "onload"),
-			onloading: $.getEvent(this,"onloading"),
-			onprepost: $.getEvent(this, "onprepost"),
-			onprogress: $.getEvent(this, "onprogress"),
-			onfinish: $.getEvent(this, "onfinish"),
-			onfinally: $.getEvent(this, "onfinally"),
-			onpost: $.getEvent(this,"onpost"),
+			onload: $.getFunction(this, "onload"),
+			onloading: $.getFunction(this,"onloading"),
+			onprepost: $.getFunction(this, "onprepost"),
+			onprogress: $.getFunction(this, "onprogress"),
+			onfinish: $.getFunction(this, "onfinish"),
+			onfinally: $.getFunction(this, "onfinally"),
+			onpost: $.getFunction(this,"onpost"),
 			loadingcss: this.data("loadingcss"),
 			trigger: this.data("trigger"),
 			silent: this.data("silent") // if true, do not fire on click of trigger
@@ -112,15 +112,15 @@
 			}
 
 
-			// ... 
+			// ... TODO: delegate needs a selector, but what if I want to pass an object?
 			if (!base.options.silent) {
 			
-
 				if (base.options.trigger) {
 					
-					// if not self, delegate within self, if it doesnt exists dont allow
+					// if not self, delegate within self
 					base.element.on("click", base.options.trigger, function (e) {
-						if (!$(e.target).is(base.options.trigger)) return false;
+						// what if base.options.trigger never exists? this should never happen right?
+						//if (!$(e.target).is(base.options.trigger)) return false;
 						return base._click(this, e);
 
 					});

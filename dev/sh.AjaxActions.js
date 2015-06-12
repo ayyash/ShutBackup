@@ -93,7 +93,7 @@
 
 		var _options = {
 			successcode: this.data("success-code"),
-			onafterremove: $.getEvent(this, "onafterremove"),
+			onafterremove: $.getFunction(this, "onafterremove"),
 			which: this.data("which")
 		};
 

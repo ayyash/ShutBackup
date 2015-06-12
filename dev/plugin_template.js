@@ -1,5 +1,71 @@
 ﻿/// <reference path="jquery-1.5.1-vsdoc.js" />
 
+(function ($) {
+
+
+	$.fn.PluingName = function (method) {
+
+		var settings = {
+			
+		};
+
+		var methods = {
+			init: function (options) {
+
+				if (options) {
+					$.extend(settings, options);
+				}
+
+
+				return this.each(function () {
+
+					var $this = $(this),
+					 data = $this.data('sh.pluginname');
+
+					// If the plugin hasn't been initialized yet
+					if (!data) {
+
+						// code 
+						// example call
+						methods.fnname.call($this); // global fn
+
+						$this.data('sh.pluginame', {
+							target: $this,
+							settings: settings
+						});
+
+					}
+				});
+
+
+			},
+			fnname: function (src) {
+				// example of function
+				var s = this.data('sh.pluginname');
+				$.extend(s, { srcElement: src }); // extending src of function
+				return this;
+			}
+
+		};
+
+		if (methods[method]) {
+			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+		} else if (typeof method === 'object' || !method) {
+			return methods.init.apply(this, arguments);
+		} else {
+			$.error('Method ' + method + ' does not exist');
+		}
+
+
+
+	};
+
+
+})(jQuery);
+
+
+// NEW plugin template
+
 
 (function ($) {
 	if (!$.Sh) {
@@ -14,7 +80,7 @@
 		
 
 		this.ShKangaroo($.extend(_options, options));
-		return $(this).data("sh.kangaroo");
+		//return $(this).data("sh.kangaroo");
 	};
 
 	// expose default options

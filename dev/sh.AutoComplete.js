@@ -16,11 +16,10 @@
 			isInline: this.data("inline"),
 			minLength: this.data("min-chars"),
 			noCache: this.data("nocache"),
-			onload: $.getEvent(this,"onload"),
-			onchange: $.getEvent(this, "onchange"),
-			onresponse: $.getEvent(this, "onresponse"),
-			onselect: $.getEvent(this, "onselect"),
-			onblur: $.getEvent(this,"onblur")
+			onchange: $.getFunction(this, "onchange"),
+			onresponse: $.getFunction(this, "onresponse"),
+			onselect: $.getFunction(this, "onselect"),
+			onblur: $.getFunction(this,"onblur")
 		};
 
 		this.ShAutocomplete($.extend(_options, options));
@@ -44,12 +43,12 @@
 
 		this.cache = {};
 		// initialize
-		this.init(options);
+		this.init();
 	};
 	
 	Autocomplete.prototype = {
 
-		init: function (options) {
+		init: function () {
 			
 			var base = this,
 				source;
@@ -59,7 +58,7 @@
 				source = this.options.source;
 			} else {
 				var ajax = $.Sh.Ajax.call(base.element, {
-					method: "GET",
+					method: "GET", // TODO: expose
 					silent: true,
 					url: base.options.source
 
@@ -139,9 +138,10 @@
 			// return instance
 			return this;
 		},
-		changeTarget: function (target) {
+		changeTarget: function (target, context) {
 			this.options.target = target;
-			this.target = $(target);
+			if (context) this.options.context = context;
+			this.target = $(target, this.options.context);
 		}
 
 	};

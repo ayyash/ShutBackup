@@ -31,7 +31,7 @@ table {
 	caption {text-align: left;}
 }
 
-table.tabulated {
+.tabulated(){
 	th {
 		padding-bottom: 2px;
 		border-bottom: 1px solid @greydark;
@@ -41,10 +41,29 @@ table.tabulated {
 		border-bottom: 1px solid @grey;
 	}
 }
+
+table.tabulated {
+.tabulated();
+}
 /* dont have tables within tables*/
-table.spacedout {
+.spacedout() {
 	td, th {padding: 10px;}
 }
-table.bordered {
+table.spacedout {
+	.spacedout();
+}
+.bordered {
 	td, th {border:1px solid @grey;}
+}
+table.bordered {
+	.bordered();
+}
+
+.tresp {
+	overflow-y: hidden;
+	overflow-x: auto;
+	width:100%;
+	>table>tbody>tr>td{
+		white-space: nowrap;
+	}
 }

@@ -12,7 +12,7 @@
 			pagesize: this.data("page-size"),
 			childselector: this.data("childselector"),
 			trigger: this.data("trigger"),
-			onpage: $.getEvent(this, "onpage")
+			onpage: $.getFunction(this, "onpage")
 		};
 
 		this.ShPager($.extend(_options, options));

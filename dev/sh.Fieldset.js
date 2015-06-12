@@ -23,10 +23,10 @@
 			addOnLoad: this.data("addonload"),
 			altText: altText,
 			target: this.data("target"),
-			onLoad: $.getEvent(this, "onload"),
-			onAdd: $.getEvent(this, "onadd"),
-			onRemove: $.getEvent(this, "onremove"),
-			onBeforeAdd: $.getEvent(this, "onbeforeadd")
+			onLoad: $.getFunction(this, "onload"),
+			onAdd: $.getFunction(this, "onadd"),
+			onRemove: $.getFunction(this, "onremove"),
+			onBeforeAdd: $.getFunction(this, "onbeforeadd")
 		};
 
 
