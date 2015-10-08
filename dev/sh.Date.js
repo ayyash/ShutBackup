@@ -4,7 +4,7 @@
 	if (!$.Sh) {
 		$.Sh = {};
 	};
-
+	
 	$.Sh.Date = function (options) {
 		// a bridge, set up options from data-
 		
@@ -13,17 +13,17 @@
 			changeYear: this.data("changeyear"),
 			dateFormat: this.data("dateformat"),
 			maxDate: this.data("maxdate"),
-			minDate: this.data("mindate")
+			minDate: this.data("mindate"),
+			defaultDate: this.data("default-date")
 		};
 
-
-		this.ShDate($.extend(_options, options));
-		return $(this).data("sh.date");
+		this.ShDate($.extend(_options, options));		
+		return this.data("sh.date");
 	};
 
 	// expose default options
 	$.Sh.Date.defaults = {
-		dateFrmat: "mm/dd/yy",
+		dateFormat: $.Res.Localization.DateFormat,
 		maxDaet: null,
 		minDate: null
 	};
@@ -36,26 +36,30 @@
 		this.element = el;
 
 		// initialize
-		this.init(options);
+		this.init();
 	};
 
 	DateControl.prototype = {
 
-		init: function (options) {
+		init: function () {
 			
 			var base = this;
+			// if default value set, pass setDate
 
 			this.element.datepicker({
 				dateFormat: base.options.dateFormat,
 				changeMonth: base.options.changeMonth,
 				changeYear: base.options.changeYear,
 				minDate: base.options.minDate,
-				maxDate: base.options.maxDate
+				maxDate: base.options.maxDate,
+				defaultDate: base.options.defaultDate
 			});
 
 
 			// this.element.datepicker()
 			this.instance = this.element.data("datepicker");
+
+			
 
 			// return instance
 			return this;
@@ -65,6 +69,10 @@
 			date = $.datepicker.parseDate(this.options.dateFormat, date, this.instance.settings);
 			this.element.datepicker("option", limit == "min" ? "minDate" : "maxDate", date);
 
+			return this;
+		},
+		removeLimit: function (limit) {
+			this.element.datepicker("option", limit == "min" ? "minDate" : "maxDate", null);
 			return this;
 		}
 
@@ -85,18 +93,20 @@
 	$.Sh.DateRange = function () {
 		
 		this.ShDateRange();
+		return this.data("sh.daterange");
 	};
 	var DateRangeControl = function (el) {
 
 		var dateFrom = el.find("[data-from]"),
-			dateTo = el.find("[data-to]");
+			dateTo = el.find("[data-to]"),
+			_this = this;
 
-		var dateFromO = $.Sh.Date.call(dateFrom).setLimit(dateTo.val(), "max");
-		var dateToO = $.Sh.Date.call(dateTo).setLimit(dateFrom.val(), "min");
+		this.dateFromO = $.Sh.Date.call(dateFrom).setLimit(dateTo.val(), "max");
+		this.dateToO = $.Sh.Date.call(dateTo).setLimit(dateFrom.val(), "min");
 
 		
-		dateFrom.datepicker("option", "onSelect", function (date) { dateToO.setLimit(date, "min") });
-		dateTo.datepicker("option", "onSelect", function (date) { dateFromO.setLimit(date, "max") });
+		dateFrom.datepicker("option", "onSelect", function (date) { _this.dateToO.setLimit(date, "min") });
+		dateTo.datepicker("option", "onSelect", function (date) { _this.dateFromO.setLimit(date, "max") });
 	};
 
 	

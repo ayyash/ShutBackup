@@ -10,13 +10,13 @@
 			text: this.data("label-text"),
 			sticky: this.data("sticky"),
 			css:  this.data("label-css"),
-			closecss: 'closelabel',
+			closecss: this.data('close-css'),
 			closetext: this.data("close-text"),
-			showclosebtn: this.data("show-close"),
+			showCloseBtn: this.data("show-close"),
 			location: this.data("label-location"),
 			which: this.data("which"), // added sept 23
 			showOnLoad: this.data("show-onload"),
-			valid: true, // mmm
+			//valid: true, // mmm
 			onShow:  $.getFunction(this, "onshow"),
 			onLoad:  $.getFunction(this, "onload"),
 			onHide: $.getFunction(this, "onhide"),
@@ -33,10 +33,10 @@
 		css: '',
 		closecss: 'closelabel',
 		closetext: $.Res.Dismiss,
-		showclosebtn: false,
+		showCloseBtn: true,
 		location: "afterEnd",
 		showOnLoad: false,
-		valid: true,
+		//valid: true,
 	};
 	var Label= function (el, options) {
 
@@ -44,7 +44,7 @@
 
 		this.element = el;
 
-		this.$err = $("<span></span>").addClass(this.options.css).html(this.options.text);
+		this.$label = $("<span></span>").addClass(this.options.css).html(this.options.text);
 		this.$closebtn = $("<span />").text(this.options.closetext).addClass(this.options.closecss);
 
 		// initialize
@@ -78,10 +78,10 @@
 				// reset opacity
 				// reset css as well
 
-				this.$err.removeClass(this.options.newCss); // should i remove orginal css as well? no, where else would i add it back
-				this.$err.addClass(s.css);
-				this.$err.css("opacity", 1);
-				this.$err.html(s.text);
+				this.$label.removeClass(this.options.newCss); // should i remove orginal css as well? no, where else would i add it back
+				this.$label.addClass(s.css);
+				this.$label.css("opacity", 1);
+				this.$label.html(s.text);
 
 				// save new css
 				this.options.newCss = s.css;
@@ -93,52 +93,54 @@
 				switch (s.location) {
 
 					case "beforeStart":
-						this.$err.insertBefore($target);
+						this.$label.insertBefore($target);
 						break;
 					case "afterStart":
-						this.$err.prependTo($target);
+						this.$label.prependTo($target);
 						break;
 					case "beforeEnd":
-						this.$err.appendTo($target);
+						this.$label.appendTo($target);
 						break;
 					case "afterEnd":
 					default:
-						this.$err.insertAfter($target);
+						
+						this.$label.insertAfter($target);
 						break;
 				}
 
-				(this.options.onShow) ? this.options.onShow.call(this.element) : null;
-
+				
 				if (!s.sticky) {
-					base.$err.delay(3000).animate({ opacity: 0 }, "slow", function () {
-						base.$err.remove();
+					base.$label.delay(3000).animate({ opacity: 0 }, "slow", function () {
+						base.$label.remove();
 						base.options.locked = false;
 						(base.options.onHide) ? base.options.onHide.call(base.element) : null;
 					});
 				} else {
-					this.options.valid = false; // if not sticky
+					//this.options.valid = false; // if not sticky
 					// add close button optionally
-					if (s.showCloseBtn) this.$err.append(this.$closebtn);
+
+					if (s.showCloseBtn) this.$label.append(this.$closebtn);
 					// make an onclick here
 					
 					this.$closebtn.on("click", function () {
-						base.hide.call(base.element);
+						base.hide();
 					});
 				}
 
+				(this.options.onShow) ? this.options.onShow.call(this.element) : null;
 
 			}
 			return this.element;
 
 		},
 		hide: function () {
-			this.$err.remove();
+			this.$label.remove();
 			this.options.locked = false;
 			(this.options.onHide) ? this.options.onHide.call(this.element) : null;
 
-			if (this.options.sticky) {
-				this.options.valid = true;
-			}
+			//if (this.options.sticky) {
+			//	this.options.valid = true;
+			//}
 			return this.element;
 		}
 	};

@@ -97,8 +97,8 @@
 						// jqueryui position
 						base.pop.position({
 							of: base.element,
-							my: "left top",
-							at: "left bottom"
+							my: "right top",
+							at: "right bottom"
 						});
 
 						return false;

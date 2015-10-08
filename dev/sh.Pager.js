@@ -12,10 +12,12 @@
 			pagesize: this.data("page-size"),
 			childselector: this.data("childselector"),
 			trigger: this.data("trigger"),
+			dir: this.data("dir"),
 			onpage: $.getFunction(this, "onpage")
 		};
 
 		this.ShPager($.extend(_options, options));
+		return this.data("sh.pager");
 	};
 
 	// expose default options
@@ -23,7 +25,8 @@
 		tmpl: $("#tmpl_paged_array"),
 		pagesize: 25, // reassign in ui.data
 		childselector: "li",
-		trigger: ".amore"
+		trigger: ".amore",
+		dir: "+"
 	};
 	// constructor, not exposed
 	var Pager = function (el, options) {
@@ -32,23 +35,25 @@
 
 		this.element = el;
 		this.template = this.options.tmpl.length ? this.options.tmpl : null;
-		this.options.trigger = this.element.find(this.options.trigger);
-		
-		
+		this.triggerElement = this.element.find(this.options.trigger);
+		this.Ajax = null;
+
 		// initialize
-		this.init(options);
+		this.init();
+
 	};
 
 	Pager.prototype = {
 
-		init: function (options) {
+		init: function () {
 			// extend options
 
 			var base = this;
 
 
-			$.Sh.Ajax.call(this.element, {
+			this.Ajax = $.Sh.Ajax.call(this.element, {
 				method: "GET",
+				trigger: this.options.trigger,
 				onfinish: function (data, trigger) {
 					if (data.result) {
 
@@ -57,17 +62,19 @@
 						var $resultset = (base.template) ? $(base.template.mustache(data.d)) : $($.parseHTML(data.d));
 
 						// append list to target then rewire 
-						$resultset.appendTo(base.options.target);
+						// CHANGE: make append or prepend optional
+						base.options.dir == "+" ? $resultset.appendTo(base.options.target) : $resultset.prependTo(base.options.target);
 						$.ShRewire($resultset);
-					
+
 						// check page size, if result set is less than pagesize, hide link
-						
+
 						if (data.d.IsLastPage || $resultset.filter(base.options.childselector).length < base.options.pagesize) {
 							this.hide();
+							// note to self: trigger is not the ajax trigger, the ajax trigger here is pager itself, reason? to style pager with its amore together
 						}
 
 						// assign to element data anything that needs to be reposted
-						
+
 						this.data("sh.ajax").addparams(data.pageparams);
 
 
@@ -81,8 +88,8 @@
 				}
 			});
 
-			
-			
+
+
 			// return instance
 			return this;
 		}

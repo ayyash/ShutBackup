@@ -35,16 +35,13 @@
 		bodyLabel.hide();
 		//stickyLabel.hide();
 		if (key != "hide") {
-			if (options.sticky) {
-				options.showCloseBtn = true;
+			if (!options.sticky) {
+				options.showCloseBtn = false;
 			}
+			// TODO: if screensize is less than 460, use Tiny as default namespace
+			
 			bodyLabel.show($.extend({ text: $.ErrMessage(key, null, options.ns ? options.ns : "Detailed") }, options));
 
-			//if (options.sticky) {
-			//	stickyLabel.show({ text: $.ErrMessage(key, null, options.ns ? options.ns : "Detailed"), css: options.css });
-			//} else {
-			//	bodyLabel.show({ text: $.ErrMessage(key, null, options.ns ? options.ns : "Detailed"), css: options.css });
-			//}
 		}
 	};
 
@@ -73,7 +70,19 @@
 		});
 	};
 
-	// keep an eye, you might want to move to behaviors.js
+	$.mustache = function (template, view, partials) {
+		return Mustache.render(template, view, partials);
+	};
+
+	$.fn.mustache = function (view, partials) {
+		return $(this).map(function (i, elm) {
+			var template = $.trim($(elm).html());
+			var output = $.mustache(template, view, partials);
+			// clean output before jquerying
+			//TODO:
+			return $(output).get();
+		});
+	};
 	$.fn.ShPosition = function (context) {
 
 		// return offset of object relative to context
@@ -83,6 +92,8 @@
 		return { top: offset.top + context.scrollTop() - contextOffset.top, left: offset.left - contextOffset.left };
 
 	};
+
+
 
 	$.fn.ShApplyHiLight = function () {
 		if (this.effect) {
@@ -131,7 +142,7 @@
 					$(this).remove();
 					// i need a return or subfunction!
 					if (fnAfterRemove && typeof (fnAfterRemove) == "function") {
-						fnAfterRemove.call($t);
+						fnAfterRemove.call($t,data);
 					}
 				});
 			}, 10);
@@ -149,13 +160,17 @@
 		}
 	};
 
-
+	// pretty price behavior
+	$.Sh.PrettyPrice = function () {
+		this.text(this.text().toPrettyPrice());
+	};
+	
 	// Wizardlist. do i really need this here?
 	// strip a tags from anything that comes after selected li
 	$.Sh.WizardList = function () {
 		this.ShWizardList();
 	};
-	var WizardList = function (el, options) {
+	var WizardList = function (el) {
 
 		var boff = false;
 		$.each(el.find(">li"), function () {
@@ -170,10 +185,10 @@
 	};
 
 	// plugin
-	$.fn.ShWizardList = function (options) {
+	$.fn.ShWizardList = function () {
 		return this.each(function () {
 			if (!$(this).data("sh.wizardlist")) {
-				$(this).data("sh.wizardlist", new WizardList($(this), options));
+				$(this).data("sh.wizardlist", new WizardList($(this)));
 			}
 
 		});

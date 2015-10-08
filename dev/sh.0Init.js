@@ -1,5 +1,4 @@
 ﻿
-
 Array.prototype.remove = function (from, to) {
 	this.splice(from, !to || 1 + to - from + (!(to < 0 ^ from >= 0) && (to < 0 || -1) * this.length));
 	return this.length;
@@ -34,10 +33,13 @@ String.prototype.toBoolean = function () {
 	if (this.toString() === "true" || this.toString() === "True") return true;
 	return false;
 };
-Number.prototype.toPrettyPrice = function () {
+// CHANGED to string instead of Number, beacuase it is rare that I use Number
+String.prototype.toPrettyPrice = function () {
+	var ret = Number(this.replace(/,/gi, ""));	
+	if (isNaN(ret)) return this;
 	// read number, tofixed of 2 digits, insert "," in every three digits, if its already fixed, unfix first
 
-	var ret = Number(this.toString().replace(/,/gi, "")).toFixed(2),
+	ret = ret.toFixed(2),
 		x = ret.toString().split('.'),
 		x1 = x[0],
 		x2 = x.length > 1 ? '.' + x[1] : '',
@@ -48,16 +50,19 @@ Number.prototype.toPrettyPrice = function () {
 	}
 	return x1 + x2;
 };
+
 String.prototype.toNormalNumber = function () {
 	// read string with "," unace
 	return this.replace(/,/gi, "");
 
 };
-Number.prototype.toPrettyNumber = function () {
+// CHANGED to string instead of Number
+String.prototype.toPrettyNumber = function () {
 	// read number, insert "," in every three digits
+	var ret = Number(this.toString().replace(/,/gi, ""));
+	if (isNaN(ret)) return this;
 
-	var ret = Number(this.toString().replace(/,/gi, "")),
-		x = ret.toString().split('.'),
+	var x = ret.toString().split('.'),
 		x1 = x[0],
 		x2 = x.length > 1 ? '.' + x[1] : '',
 		rgx = /(\d+)(\d{3})/;
@@ -76,7 +81,7 @@ function _debug(o, message, type) {
 		}
 	}
 }
-var $body;
+//gone: var $body;
 
 (function ($) {
 

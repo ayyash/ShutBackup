@@ -18,7 +18,8 @@
 
 
 		this.ShRadio($.extend(_options, options));
-		return $(this).data("sh.radio");
+		
+		return this.data("sh.radio");
 	};
 
 	// expose default options
@@ -58,18 +59,21 @@
 				if (base.checked) {
 					if (base.options.onDblCheck) base.options.onDblCheck.call(base);
 				} else {
-					// remove checked from group
+					// remove checked from group (TODO: may be i should exclude current?)
 					base.group.each(function () {
-
-						var shRadio = $(this).closest(base.options.container);
-						if (shRadio.data("sh.radio")) {
-							shRadio.removeClass(base.options.css).data("sh.radio").checked = false;
+						
+						if (!$(this).is(base.control)) {
+							
+							var shRadio = $(this).closest(base.options.container);
+							if (shRadio.data("sh.radio")) {
+								//shRadio.removeClass(base.options.css).data("sh.radio").checked = false;
+								shRadio.data("sh.radio").uncheck();
+							}
 						}
-
 					});
 					base.element.addClass(base.options.css);
 					base.checked = true;
-
+					
 					if (base.options.onCheck) base.options.onCheck.call(base);
 				}
 
@@ -91,6 +95,7 @@
 			base.control.removeProp('checked');
 			base.element.removeClass(base.options.css);
 			base.checked = false;
+			
 			if (base.options.onUncheck) base.options.onUncheck.call(base);
 			return base;
 		},
@@ -112,7 +117,6 @@
 	};
 
 	$.Sh.RadioGroup = function (options) {
-
 		var $radiogroup = this,
 			container = this.data("container") || "label",
 			css = this.data("css"),
@@ -120,10 +124,11 @@
 
 		// for each container, Radio
 		$containers.each(function () {
-			$.Sh.Radio.call(this, { container: container, css: css });
+			var _label = $.Sh.Radio.call($(this), $.extend({ container: container, css: css }, options));
+			if (_label.checked) $radiogroup.data("selected",_label);
 		});
 
-
+		
 	};
 
 
@@ -139,7 +144,7 @@
 
 
 		this.ShCheckbox($.extend(_options, options));
-		return $(this).data("sh.checkbox");
+		return this.data("sh.checkbox");
 	};
 
 	// expose default options
@@ -175,26 +180,30 @@
 
 
 			base.control.on("click", function () {
-				// if already checked, fire special event
-				this.checked ? base.element.addClass(base.options.css) : base.element.removeClass(base.options.css);
-				base.checked = this.checked;
-				if (base.options.onCheck) base.options.onCheck.call(base);
+				
+				// TODO: if already checked, fire special event
+				base.toggle(this.checked);
 
 			});
 			
-
 			return this;
 
 		},
+		check: function(){
+			this.toggle(true);
+		},
 		uncheck: function () {
-
+			this.toggle(false);
+		},
+		toggle: function (checked) {
 			var base = this;
+			checked ? base.element.addClass(base.options.css) : base.element.removeClass(base.options.css);
+			checked ? base.control.prop('checked', true) : base.control.removeProp('checked');
+			base.checked = checked;
 
-			base.control.removeProp('checked');
-			base.element.removeClass(base.options.css);
-			base.checked = false;
-			if (base.options.onUncheck) base.options.onUncheck.call(base);
-			return base;
+			if (checked && base.options.onCheck) base.options.onCheck.call(base);
+			if (!checked && base.options.onUncheck) base.options.onUncheck.call(base);
+
 		},
 		add: function (elememt) {
 			// add element to group

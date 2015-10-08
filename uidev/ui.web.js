@@ -27,19 +27,17 @@
 		// need another sticky error, with a button to close error
 		$.rewireload();
 	
-		ThrowOut();
+		$.ThrowOut();
 
 	});
+	$.ThrowOut = function () {
+		$(document).ajaxSuccess(function (event, xhr, settings, data) {
+
+			if (data.result && data.redirectUrl) {
+				window.location.href = data.redirectUrl;
+			}
+		});
+	};
 
 })(jQuery);
 
-
-
-function ThrowOut() {
-	$(document).ajaxSuccess(function (event, xhr, settings, data) {
-
-		if (data.result && data.loginUrl) {
-			window.location.href = data.loginUrl;
-		}
-	});
-}

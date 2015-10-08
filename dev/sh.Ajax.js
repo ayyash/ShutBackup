@@ -4,7 +4,7 @@
 (function ($) {
 	if (!$.Sh) {
 		$.Sh = {};
-	};
+	}
 
 	$.Sh.toJson = function (s) {
 		if (s === "" || s == null) return {};
@@ -52,8 +52,9 @@
 			trigger: this.data("trigger"),
 			silent: this.data("silent") // if true, do not fire on click of trigger
 		};
-	
+		
 		this.ShAjax($.extend(_options, options));
+		
 		return this.data("sh.ajax");
 	};
 
@@ -63,7 +64,7 @@
 		type: "POST",
 		dataType: "json",
 		data: {},
-		//contentType: // default instead of application/x-www-form-urlencoded; charset=UTF-8, send "application/json; charset=utf-8",  otherwise
+		//contentType: // default instead of application/x-www-form-urlencoded; charset=UTF-8, send "application/json; charset=utf-8",  otherwise (multipart/form-data)
 		onload: null,
 		onloading: function (bloading,srcelement) {
 			bloading ? this.addClass("loadings") : this.removeClass("loadings");
@@ -82,27 +83,29 @@
 	// constructor, not exposed
 	var Ajax = function (el, options) {
 
-		
+	
+		this.options = $.extend({}, $.Sh.Ajax.defaults, options);	
+
 		this.element = el;
 		this._IsLoading = false;
 		
 		// initialize
-		this.init(options);
+		this.init();
 	};
 
 	Ajax.prototype = {
 		
-		init: function (options) {
-			// extend options
-			this.options = $.extend({}, $.Sh.Ajax.defaults, options);
-		
+		init: function () {
+					
 			// TODOL internal object
-			this.options.dataobject = {};
+			//this.options.dataobject = {};
 
-
+			
 			var base = this;
 			// fire onload
-			if (this.options.onload) this.options.onload.call(this.element);
+			
+
+			if (base.options.onload) base.options.onload.call(base.element);
 
 			// turn data to json to make it easier to addparams
 			if (base.options.style == "qs") {
@@ -110,7 +113,9 @@
 			} else if (base.options.style == "array") {
 				base.options.data = $.Sh.toJson($.param(base.options.data));
 			}
-
+			//} else if ($.isEmptyObject(base.options.data)) {
+			//	//base.options.data = {}; // this is to fix a stupid glitch, where another extend changes $.Sh.Ajax.defaults
+			//}
 
 			// ... TODO: delegate needs a selector, but what if I want to pass an object?
 			if (!base.options.silent) {
@@ -156,8 +161,9 @@
 					params = $.Sh.toJson($.param(params));
 					break;
 			}
-			$.extend(this.options.data, params); // extend, fingures crossed
-
+			// changed
+			this.options.data = $.extend({}, this.options.data, params); // extend. alla yostor
+			
 		},
 		addtrigger: function (trigger) {
 			var base = this;
@@ -215,12 +221,12 @@
 					if (base.options.onfinally) base.options.onfinally.call(base.element, base.options.dataType == "json" ? xhr.responseJSON : xhr.responseText, status,srcelement);
 				}
 			};	
-
+			
 			var xhr = $.ajax($.extend(ajaxops, base.options));
-
+			
 			base.options.onpost.call(base, xhr); // let developer call done, fail, and always
 
-			return this; // instace of this object
+			return base; // instace of this object
 		}
 		
 		

@@ -109,7 +109,7 @@
 		$.Behaviors();
 		$.props._BehaviorsReady = true;
 
-		$.props.$body.on("click", function (e) {
+		$(window.document).on("click", function (e) {
 			// fire attached events
 			$.each($.popbasket, function (i, o) {
 				var fn = $.getFunction(o,"ondocumentclick");//o.data("ondocumentclick");

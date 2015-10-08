@@ -205,7 +205,11 @@
 					this[key].push(jqm.ID);
 
 					// register trigger click event for this modal
-					$(this).click(function () {
+					$(this).click(function (f) {
+						// Ayyash added, allow cancelation
+						if (f.isDefaultPrevented()) return false;
+						
+
 						var trigger = this;
 
 						e[key](this);
@@ -384,7 +388,7 @@
 			trigger: this.data("trigger"),
 			ajax: this.data("ajax"),
 			target: this.data("target"),
-			ajaxText: String('<div class="loading">{0}</div>').format(this.data("loading-text")),
+			ajaxText: String('<div class="loading">{0}</div>').format(this.data("loading-text") || ""),
 			modal: this.data("ismodal"),
 			onShow: $.getFunction(this,"onshow"),
 			onHide: $.getFunction(this,"onhide"),
@@ -423,6 +427,7 @@
 
 	};
 	// i need to rewrite params in a way that preserves built in events
+	// TODO: this should be done on load to grab project defaults object
 	$.extend($.jqm.params, $.Sh.Modal.defaults);
 
 	// constructor, not exposed
@@ -487,6 +492,20 @@
 				}
 			}
 
+		},
+		// TODO expose jqmShow for each modal
+		show: function(type){
+			switch (type ) {
+				case "ajax":
+					$.Sh.Modals.ajaxDialog.jqmShow();
+					break;
+				case "iframe":
+					$.Sh.Modals.frameDialog.jqmShow();
+					break;
+				case "inpage":
+					// needs though
+					break;
+			}
 		},
 		bindContent: function(context){
 			// bind content
@@ -565,11 +584,10 @@
 			hash.w.addClass(dialogStyle);
 			// add text to title
 
-			$("h3", hash.w).text($trigger.attr("title") || $trigger.attr("data-title") || "");
+			$("h3", hash.w).text($trigger.attr("data-title") || $trigger.attr("title") || "");
 
 
 			// change top and left
-
 			hash.w.css("left", ($.props.width - hash.w.width()) / 2);
 			if (dialogSpan == "fill") {
 				hash.w.css("top", $.props.height * 0.05)

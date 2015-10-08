@@ -8,10 +8,7 @@
 
 	$.Sh.Fieldset = function (options) {
 		// a bridge, set up options from data-
-		var altText = this.data("alt-text");
-		if (this.find(this.data("trigger")).length) {
-			altText = this.find(this.data("trigger").data("alt-text"));
-		}
+		
 		var _options = {
 			trigger: this.data("trigger"),
 			remove: this.data("remove"),
@@ -21,7 +18,7 @@
 			isGreedy: this.data("greedy"),
 			hookSelector: this.data("hook-selector"),
 			addOnLoad: this.data("addonload"),
-			altText: altText,
+			altText: this.data("trigger"),
 			target: this.data("target"),
 			onLoad: $.getFunction(this, "onload"),
 			onAdd: $.getFunction(this, "onadd"),
@@ -38,7 +35,7 @@
 	$.Sh.Fieldset.defaults = {
 		trigger: ".addfs",
 		remove: ".remfs",
-		template: "tmplfs",
+		template: ".tmplfs",
 		collectionId: ".itemfs",
 		isGreedy: false,
 		addOnLoad: false,
@@ -53,6 +50,7 @@
 		// extend options
 		this.options = $.extend({}, $.Sh.Fieldset.defaults, options);
 
+		
 		this.element = el;
 
 		// define template, allow template change on runtime
@@ -60,6 +58,9 @@
 
 		// find trigger, remove trigger and target
 		this.trigger = (this.options.trigger instanceof jQuery) ? this.options.trigger : this.element.find(this.options.trigger);
+
+		// find alttext again
+		if (!options.altText && this.trigger.data("alt-text")) this.options.altText = this.trigger.data("alt-text");
 		
 		this.target =  this.element.find(this.options.target);
 

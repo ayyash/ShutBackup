@@ -62,7 +62,7 @@
 			var base = this;
 
 
-			this.srcElement.length && this.element.on("click", this.options.src, function (e) {
+			this.srcElement.length && this.element.on("click", base.options.src, function (e) {
 				base._click(e);
 			});
 
@@ -118,6 +118,8 @@
 		},
 		show: function () {
 
+			if (!this.options.active) return;
+
 			if (this.options.onBeforeShow) {
 				this.options.onBeforeShow();
 				return this;
@@ -143,12 +145,13 @@
 			}
 			// i think i should return if element is already visibt
 			this.options.state = "show";
-			
+			this.element.addClass(this.options.togglecss);
 			this.options.onShow && this.options.onShow.call(this); // fire onshow anyway // double check
 			return this;
 
 		},
 		toggle: function () {
+			if (!this.options.active) return;
 
 			// for effects of slide and fade
 			if (this.gutsElement.is(":visible")) {
@@ -156,12 +159,13 @@
 			} else {
 				this.show();
 			}
-			this.element.toggleClass(this.options.togglecss); // let user decide what initial state is
+			
 			return this;
 
 		},
 		hide: function () {
-		
+			if (!this.options.active) return;
+
 			if (this.options.onBeforeHide) {
 				this.options.onBeforeHide();
 				return this;
@@ -183,8 +187,12 @@
 
 			}
 			this.options.state = null;
+			this.element.removeClass(this.options.togglecss);
 			this.options.onHide && this.options.onHide.call(this);
 			return this;
+		},
+		setActive: function (bActive) {
+			this.options.active = bActive;
 		}
 
 	};
@@ -335,8 +343,8 @@
 		// if no selected, find selected
 		if (!this.options.selected) {
 			// find selected by value or by selected css
-			this.options.selected = this.options.selectedValue ? this.items.filter("[data-value='{0}']".format(this.options.selectedValue)) : this.items.filter(this.options.css).first();
-
+			this.options.selected = this.options.selectedValue ? this.items.filter("[data-value='{0}']".format(this.options.selectedValue)) : this.items.filter("."+this.options.css).first();
+			
 			// still not found, get first
 			if (!this.options.selected.length)
 				this.options.selected = this.items.first();
@@ -369,7 +377,7 @@
 
 			//hide
 			this.expands.hide();
-			e.preventDefault();
+			//e.preventDefault();
 			
 		},
 		additem: function (item) {
@@ -448,8 +456,9 @@
 				base.collection.push(expands);
 			});
 
+			// selected or first item
 			var selected = base.group.filter("." + base.options.selectcss);
-			base.selected = selected.length ? selected.data("sh.expands") : null;
+			base.selected = selected.length ? selected.data("sh.expands") : base.group.first().data("sh.expands");
 
 			base.group.on("click", function (e) {
 				e.preventDefault();
@@ -458,10 +467,12 @@
 
 			});
 
+			// on load may change selected
+			base.options.onLoad && base.options.onLoad.call(base);
+
 			// select if one is selected
 			base.selected && base.select(base.selected);
 
-			base.options.onLoad && base.options.onLoad.call(base);
 			// return instance
 			return this;
 		},

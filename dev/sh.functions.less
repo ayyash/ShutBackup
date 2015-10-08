@@ -6,7 +6,7 @@
 	&:before,
 	 &:after {
 		content:"";
-		display:block;
+		display:table;
 		zoom: 1;
 		*display: inline;
 	}
@@ -301,7 +301,9 @@
 	.font-size(@value) when (@rem-enabled) {
 		font-size: @value * 1rem;
 	}
-} 
+}
+
+
 /* icons*/
 
 .symbolDef(){
@@ -314,9 +316,9 @@
 	-moz-osx-font-smoothing: grayscale;
 	font-smooth:always;
 }
-.design .symbol:before {
+/*.design .symbol:before {
 	font-size: 1.6rem;
-}
+}*/
 
 .icon(@name, @value) {
 	.@{name}{ &:before {content: @value;}}

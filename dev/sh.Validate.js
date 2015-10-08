@@ -62,7 +62,7 @@
 			skip: this.data("skip"),
 			asyncvalid: this.data("async-valid")
 		};
-
+		
 		this.ShValidate($.extend(_options, options));
 		return this.data("sh.validate");
 	};
@@ -76,7 +76,6 @@
 		reqcss: "req",
 		reqmsg:$.Res.Required,
 		errlabelcss: "errlabel",
-		errmsg: $.Res.Required,
 		customlabelcss: "cerrlabel",
 		errlocation: "afterEnd",
 		showonload: false,
@@ -91,36 +90,39 @@
 
 		this.element = el;
 		// which one to call
-		
+		this.reqstar = $('<span></span>').addClass(this.options.reqcss);
+
+		this.label = null;
+		this.code = null; // save the last code associtated with it
+
 		if (this.options.type == "custom") {
-			this.custom(options);
+			this.custom();
 		}else{
-			this.init(options);
+			this.init();
 		}
 	};
 
 	Validate.prototype = {
 		
-		init: function (options) {
+		init: function () {
 			// extend options
 			
 			var base = this, el = this.element;
-
+			
 			if (base.options.required) {
-				el.wrap('<div class="wrapvld"></div>').addClass(base.options.reqcss).after($('<span></span>').addClass(base.options.reqcss)); // this line is causing issues, wrapping uses a clone
+				el.wrap('<div class="wrapvld"></div>').addClass(base.options.reqcss).after(base.reqstar); // this line is causing issues, wrapping uses a clone
 			} else {
 				el.wrap('<div class="wrapvld"></div>');
 			}
 			//default label
-			el.ShLabel({
+			base.label = $.Sh.Label.call(el,{
 				text: base.options.errmsg,
 				sticky: true,
 				showCloseBtn: false,
 				css: base.options.errlabelcss + (base.options.required ? "" : " unlabel"),
 				location: base.options.errlocation,
 				showOnLoad: base.options.showonload,
-				valid: base.options.valid,
-
+				//valid: base.options.valid,
 				onShow: function () {
 					el.addClass(base.options.inputcss);
 					if (base.options.onshow) base.options.onshow.call(this);
@@ -133,34 +135,35 @@
 			});
 			
 			
-			el.on("change", function () {
-				// reset validation
-				base.options.valid = false;
-			});
+			//el.on("change", function () {
+			//	// reset validation, mmm
+			//	//base.options.valid = false;
+			//});
 			// on focus, hide label
 			el.on("focus keydown", function () {
-				el.data("sh.label").hide();
+
+				base.label.hide();
+				
 			});
 			// return instance
 			return this;
 		},
 		methods: {
-			required: function (val,label) {
-				this.options.valid = true;
-
+			required: function (val,label, msg) {
+				
 				if (val === "") {
-					label.show({ text: this.options.errmsg || $.Res.Required });
+					label.show({ text: msg});
 					this.options.valid = false;
 					
 				}
-				// TODO other required forms
+				
 				return this.options.valid;
 			},
 			format: function (val,label) {
 				
 				// override error message with something suitable to format if exists
 				var f = this.options.format, msg =  this.options.errmsg || $.Res.Tiny.INVALID_FORMAT;
-				this.options.valid = true;
+				
 
 				var re = $.Sh.FormatRules[f] || new RegExp(f, "i");
 				if (f in $.Sh.FormatRules) {
@@ -183,12 +186,13 @@
 					}
 				}
 				if (!this.options.valid) label.show({ text: msg });
+				
 				return this.options.valid;
 			},
 			range: function (val,label) {
 				// range is between min and max
 				
-				this.options.valid = true;
+				
 				val = Number(val);
 			
 				var min = parseInt(this.options.min),
@@ -210,12 +214,13 @@
 				return true;
 			},
 			rangelength: function (val, label) {
-				this.options.valid = true;
+			
 				var min = parseInt(this.options.minLength),
 					max = parseInt(this.options.maxLength);
 				
 				//var min = this.data("min-length") ? parseFloat(this.data("min-length")) : null;
 				//var max = this.data("max-length") ? parseFloat(this.data("max-length")) : null;
+				
 
 				var _length = val.length;
 
@@ -233,7 +238,10 @@
 		validate: function () {
 			// call onvalidate
 			
-			var base = this, el = this.element, label = el.data("sh.label");
+			var base = this, el = this.element, label = this.label;
+
+			base.options.valid = true;
+			base.code = base.options.type;
 
 			if (base.options.type == "custom") {
 				if (base.options.onvalidate) return base.options.onvalidate.call(base, label);
@@ -243,37 +251,54 @@
 
 			var val = el.ShTrim();
 
-			if (!base.options.type != "required" && base.options.required && val === "") {
-				// if method is other than "required" and field is required, show error immidiately
-				label.show({ text: base.options.reqmsg });
-				return false;
+			if (base.options.required) {
+				var m = base.options.type == "required" ? base.options.errmsg || $.Res.Required : base.options.reqmsg;
+				// if false return
+				if (!base.methods.required.call(base, val, label, m)) return false;
+				
 			}
-
+			
 			// according to type, call method, if other than required, apply only on non emtpy values
-			if (val !== "" && !base.methods[base.options.type].call(base, val, label)) {
+			if (base.options.type != "required" && val !== "" && !base.methods[base.options.type].call(base, val, label)) {
 				return false;
 			}
-
+			
 			// fire external validation
 			if (base.options.onvalidate) return base.options.onvalidate.call(base, val, label);
+		
 			return true;
 		},
 		custom: function () {
 			// setup label, and call inline onvalidate, which is supposed to deal with the label directly
 			var base = this;
 			
-			this.element.ShLabel({
+			this.label = $.Sh.Label.call(this.element,{
 				text: base.options.errmsg,
 				sticky: true,
 				showCloseBtn: false,
 				css: base.options.customlabelcss,
 				location: base.options.errlocation,
 				showOnLoad: base.options.showonload,
-				valid: base.options.valid,
+				//valid: base.options.valid,
 				onShow: base.options.onshow,
 				onLoad: base.options.onload,
 				onHide: base.options.onhide
 			});
+			
+			return this;
+		},
+		toggleReqstar: function (isrequired) {
+			// if required, for now, show reqstar, else hide it. validation should come from custom behavior
+			// TODO: maybe i should detect reqstar and add it if not there yet
+			isrequired ? this.reqstar.show() : this.reqstar.hide();
+			return this;
+		},
+		option: function (name, value) {
+			this.options[name] = value;
+			if (name == "required" ) {
+				this.toggleReqstar(value);
+				this.label.hide();
+			}
 			return this;
 		}
 		
@@ -308,7 +333,7 @@
 			bDoValidate: this.data("dovalidate"),
 			silent: this.data("silent")
 		};
-
+		
 		this.ShValidateForm($.extend(_options, options));
 	};
 
@@ -367,10 +392,11 @@
 			$.each(this.options.fields, function (i, o) {
 				
 				var $t = $(this),
-					label = $t.data("sh.label"), // label object
+					//label = $t.data("sh.label"), // label object
 					v = $t.data("sh.validate"); // validation object
+				
 
-				label.hide();
+				v.label.hide();
 
 				// taking care of placeholder first, assumung using Placeholder plugin
 				if (!jQuery.support.placeholder) {
@@ -421,6 +447,9 @@
 			}
 
 			return true;
+		},
+		addField: function (field) {
+			this.options.fields.add(field);
 		}
 
 	};
@@ -440,6 +469,7 @@
 		// test if FileReader is supported first
 		var size = parseInt(this.element.data("size") || 500);
 		if (isNaN(size)) size = 500;
+		this.code = "size";
 
 		size = size * 1000;
 

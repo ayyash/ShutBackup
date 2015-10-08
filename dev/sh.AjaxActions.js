@@ -6,13 +6,16 @@
 (function ($) {
 	if (!$.Sh) {
 		$.Sh = {};
-	};
+	}
 
 	$.Sh.Submit = function (options) {
-		
-		
+
+
 		var _options = {
-			successcode: this.data("success-code")
+			successcode: this.data("success-code"),
+			trigger: this.data("trigger"),
+			onprepost: $.getFunction(this, "onprepost")
+
 		};
 
 
@@ -27,28 +30,33 @@
 	// constructor, not exposed
 	var Submit = function (el, options) {
 
+		// extend options
+		this.options = $.extend({}, $.Sh.Submit.defaults, options);
+
 		this.element = el;
 		// initialize
-		this.init(options);
+		this.Ajax = null;
+		this.init();
+
 	};
 
 	Submit.prototype = {
 
-		init: function (options) {
-			// extend options
-			this.options = $.extend({}, $.Sh.Submit.defaults, options);
+		init: function () {
 			
 			var base = this;
 
 			// call ajax with set properties
-			var o = $.Sh.Ajax.call(this.element, {
+			this.Ajax = $.Sh.Ajax.call(this.element, {
+				trigger: base.options.trigger,
 				onprepost: function () {
 					$.BodyLabel("hide")
 
 					var f = this.options.style == "array" ? base.element.formToArray(true) : base.element.formToJson();
-					this.addparams(f,this.options.style);
+					this.addparams(f, this.options.style);
+					return (base.options.onprepost) ? base.options.onprepost.call(base) : true;
 
-					return true;
+
 				},
 				onloading: function (bloading) {
 					if (bloading) {
@@ -112,6 +120,7 @@
 
 		this.element = el;
 		// initialize
+		this.Ajax = null;
 		this.init(options);
 	};
 
@@ -125,7 +134,7 @@
 
 			// on click remove context 
 			// call ajax with set properties
-			var o = $.Sh.Ajax.call(this.element, {
+			this.Ajax = $.Sh.Ajax.call(this.element, {
 				onloading: function (bloading) {
 					if (bloading) {
 						$.BodyLabel("hide");
@@ -133,7 +142,7 @@
 					} else {
 						this.removeClass("loadings");
 					}
-				
+
 				},
 				onfinish: function (data) {
 					if (data.result) {
@@ -141,11 +150,11 @@
 						setTimeout(function () {
 
 							base.element.closest(base.options.which).fadeOut(500, function () {
-
-								base.element.remove();
+							//TODO: return the removed element onafterremove
+								$(this).remove();
 								$.BodyLabel(base.options.successcode, { css: "gbodybox" });
 
-								if (base.options.onafterremove) base.options.onafterremove.call(base,data);
+								if (base.options.onafterremove) base.options.onafterremove.call(base, data);
 							});
 						}, 10);
 
@@ -171,5 +180,8 @@
 
 		});
 	};
+
+	// lazy load content
+
 })(jQuery);
 
