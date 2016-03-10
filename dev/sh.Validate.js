@@ -62,7 +62,6 @@
 			skip: this.data("skip"),
 			asyncvalid: this.data("async-valid")
 		};
-		
 		this.ShValidate($.extend(_options, options));
 		return this.data("sh.validate");
 	};
@@ -87,7 +86,6 @@
 	var Validate = function (el, options) {
 
 		this.options = $.extend({}, $.Sh.Validate.defaults, options);
-
 		this.element = el;
 		// which one to call
 		this.reqstar = $('<span></span>').addClass(this.options.reqcss);
@@ -110,7 +108,8 @@
 			var base = this, el = this.element;
 			
 			if (base.options.required) {
-				el.wrap('<div class="wrapvld"></div>').addClass(base.options.reqcss).after(base.reqstar); // this line is causing issues, wrapping uses a clone
+				
+				el.wrap(String('<div class="wrapvld {0}"></div>').format(base.options.reqcss)).after(base.reqstar); // this line is causing issues, wrapping uses a clone
 			} else {
 				el.wrap('<div class="wrapvld"></div>');
 			}
@@ -245,6 +244,7 @@
 
 			if (base.options.type == "custom") {
 				if (base.options.onvalidate) return base.options.onvalidate.call(base, label);
+				// imagine if u could do this base.element.trigger("validate")
 				_debug(el, "custom validation not implemented");
 				return false;
 			}
@@ -252,7 +252,7 @@
 			var val = el.ShTrim();
 
 			if (base.options.required) {
-				var m = base.options.type == "required" ? base.options.errmsg || $.Res.Required : base.options.reqmsg;
+				var m = base.options.type == "required" ? base.options.errmsg || base.options.reqmsg : base.options.reqmsg;
 				// if false return
 				if (!base.methods.required.call(base, val, label, m)) return false;
 				
@@ -329,12 +329,14 @@
 			context: this.data("context"),
 			trigger: this.data("trigger") ? this.find(this.data("trigger")) : this,
 			offset: this.data("offset"),
-			selector:  this.data("validate-selector"),
+			selector: this.data("validate-selector") || this.data("validateselector"),
 			bDoValidate: this.data("dovalidate"),
-			silent: this.data("silent")
+			silent: this.data("silent"),
+			onvalidate: $.getFunction(this,"onvalidate")
 		};
 		
 		this.ShValidateForm($.extend(_options, options));
+		return this.data("sh.validateform");
 	};
 
 	// expose default options
@@ -353,7 +355,7 @@
 		this.options = $.extend({}, $.Sh.ValidateForm.defaults, options);
 
 		if (!this.options.fields)
-			this.options.fields = $(this.options.selector, this.context || $.props.$body);
+			this.options.fields = $(this.options.selector, this.options.context || $.props.$body); // fixed this.context!
 
 		this.context = this.options.context || window;
 	
@@ -411,7 +413,7 @@
 					
 					if (!v.options.skip && (!v.options.asyncvalid || !v.validate())) {
 						// call onasyncerror again, this happens when user focuses, loses error label, then blurs while the async error is still present)
-						if (!v.options.asyncvalid) $t.trigger("AsnycError");
+						if (!v.options.asyncvalid) $t.trigger("shAsync");
 						
 						isValid = false;
 
@@ -442,11 +444,13 @@
 					if (base.context.scrollTop() > fTop) base.context.animate({ scrollTop: fTop }, 'fast', 'swing');
 				}
 
+				// maybe i should fire an event here
+				base.options.onvalidate ? base.optionns.onvalidate.call(base, false) : null;
 
 				return false;
 			}
-
-			return true;
+			// i should fire an event here
+			return base.options.onvalidate ? base.optionns.onvalidate.call(base, true) : true;
 		},
 		addField: function (field) {
 			this.options.fields.add(field);
@@ -467,6 +471,7 @@
 
 	$.UiSh.Size = function (val, label) {
 		// test if FileReader is supported first
+		
 		var size = parseInt(this.element.data("size") || 500);
 		if (isNaN(size)) size = 500;
 		this.code = "size";
@@ -500,10 +505,12 @@
 		var min = this.element.data("options-min");
 		var max = this.element.data("options-max");
 
-		this.options.errmsg
+		this.code = "options";
+		_debug({ min: min, max: max, options: options });
+
 		if ((min != null && min > options.length) || (max != null && max < options.length)) {
 
-			label.show();
+			label.show({text: this.options.errmsg ||  $.Res.Tiny.INVALID_OPTIONS});
 			return false;
 		}
 

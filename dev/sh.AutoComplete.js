@@ -11,6 +11,7 @@
 		// a bridge, set up options from data-
 		var _options = {
 			source: this.data("source"),
+			method: this.data("method"),
 			target: this.data("target"),
 			context: this.data("context"),
 			isInline: this.data("inline"),
@@ -29,7 +30,8 @@
 	// expose default options
 	$.Sh.Autocomplete.defaults = {
 		minLength: 0,
-		context: $.props.$body
+		context: $.props.$body,
+		method: "GET"
 	};
 	// constructor, not exposed
 	var Autocomplete = function (el, options) {
@@ -58,7 +60,7 @@
 				source = this.options.source;
 			} else {
 				var ajax = $.Sh.Ajax.call(base.element, {
-					method: "GET", // TODO: expose
+					method: base.options.method, // TODO: expose
 					silent: true,
 					url: base.options.source
 

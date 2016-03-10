@@ -72,11 +72,13 @@ function BasicMirror(txt) {
 	};
 	//TODO border-radius
 	
-	var padre = /padding: (\w+)\s{1}(\w+)\s{1}(\w+)\s{1}(\w+)?;/g;
-	var marginre = /margin: (\w+)\s{1}(\w+)\s{1}(\w+)\s{1}(\w+)?;/g;
+	var padre = /padding: (-?\w+)\s{1}(-?\w+)\s{1}(-?\w+)\s{1}(-?\w+)?;/g;
+	var marginre = /margin: (-?\w+)\s{1}(-?\w+)\s{1}(-?\w+)\s{1}(-?\w+)?;/g;
 	var borstylere = /border-style: (\w+)\s{1}(\w+)\s{1}(\w+)\s{1}(\w+)?;/g;
 	var borwidthre = /border-width: (\w+)\s{1}(\w+)\s{1}(\w+)\s{1}(\w+)?;/g;
 	var borcolorre = /border-color: (\w+)\s{1}(\w+)\s{1}(\w+)\s{1}(\w+)?;/g;
+	var borcolorre = /border-color: (\w+)\s{1}(\w+)\s{1}(\w+)\s{1}(\w+)?;/g;
+
 	
 	newStr = newStr.replace(padre, repPad);
 	newStr = newStr.replace(marginre, repMargin);

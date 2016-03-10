@@ -188,16 +188,12 @@
 			return true;
 
 
-		}, addTrigger = function (e, key, trigger) {
-			// addTrigger: Adds a jqmShow/jqmHide (key) event click on modal (e)
+		}, addTrigger = function (m, key, trigger) {
+			// addTrigger: Adds a jqmShow/jqmHide (key) event click on modal (m)
 			//  to all elements that match trigger string (trigger)
 
-			var jqm = e.data('jqm');
-
-			// return false if e is not an initialized modal element
-			if (!e.data('jqm')) return false;
-
-			return $(trigger).each(function () {
+			var jqm = m.data('jqm');
+			if (jqm) return $(trigger).each(function () {
 				this[key] = this[key] || [];
 
 				// register this modal with this trigger only once
@@ -205,16 +201,9 @@
 					this[key].push(jqm.ID);
 
 					// register trigger click event for this modal
-					$(this).click(function (f) {
-						// Ayyash added, allow cancelation
-						if (f.isDefaultPrevented()) return false;
-						
-
-						var trigger = this;
-
-						e[key](this);
-
-						// stop trigger click event from bubbling
+					//  allows cancellation of show/hide event from
+					$(this).click(function (e) {
+						if (!e.isDefaultPrevented()) m[key](this);
 						return false;
 					});
 				}
@@ -463,7 +452,7 @@
 			frameDialog: '#frameDialog',
 			contentDialog: '#contentDialog',
 			loadingcss: ".loading",
-			modal: true
+			modal: true // TOGO
 		},
 		rewire: function (context) {
 			// wait for body load for this
@@ -477,6 +466,9 @@
 
 				// rewire content!
 				$.Sh.Modals.bindContent(context);
+
+				// im skeptic
+				$.props.$body.trigger("ModalsReady", [context]);
 			}
 		},
 		hideAll: function () {
@@ -493,7 +485,7 @@
 			}
 
 		},
-		// TODO expose jqmShow for each modal
+		// expose jqmShow for each modal
 		show: function(type){
 			switch (type ) {
 				case "ajax":
@@ -503,7 +495,7 @@
 					$.Sh.Modals.frameDialog.jqmShow();
 					break;
 				case "inpage":
-					// needs though
+					// TODO: needs thought
 					break;
 			}
 		},
@@ -522,7 +514,8 @@
 				$.each(context.find("[data-modal=inpage]"), function (i, o) {
 					// get handler
 					var o = $(o);
-					var h = o.data("modal-trigger");
+					// backward compatibility
+					var h = o.data("modal-trigger") || o.data("modaltrigger");
 
 					// insert the close button and h3 using title attribute
 					o.wrapInner('<div id="jqmContent"></div>');
@@ -586,7 +579,7 @@
 
 			$("h3", hash.w).text($trigger.attr("data-title") || $trigger.attr("title") || "");
 
-
+			// TODO unify height and top for all, seems like i never need more than an adequate position automatic
 			// change top and left
 			hash.w.css("left", ($.props.width - hash.w.width()) / 2);
 			if (dialogSpan == "fill") {
@@ -599,11 +592,20 @@
 			if (hash.c.mode == "iframe") {
 				$modalContent = $("iframe", hash.w);
 				
-				$modalContent.bind("load", function (e) {
+				$modalContent.on("load", function (e) {
+					
 					hash.w.find($.Sh.Modals.defaults.loadingcss).hide();
+					$modalContent.show();
+					$(this.contentWindow).on("beforeunload", function (e) {
+						
+						$modalContent.hide();
+						hash.w.find($.Sh.Modals.defaults.loadingcss).show();
+					});
 				})
 					.html('')
 					.attr("src", $trigger.attr("href"));
+				
+				
 			}
 			
 			// show hide the close button

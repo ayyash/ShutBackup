@@ -24,7 +24,7 @@
 		// function that shows a general error badge in body
 		bodyLabel = $.Sh.Label.call($.props.$body,{
 			text: "",
-			css: "gerrorbox",
+			css: "",
 			location: "beforeEnd",
 			sticky: false
 		});
@@ -32,6 +32,7 @@
 
 	});
 	$.BodyLabel = function (key, options) {
+		if (!bodyLabel) return;
 		bodyLabel.hide();
 		//stickyLabel.hide();
 		if (key != "hide") {
@@ -41,6 +42,7 @@
 			// TODO: if screensize is less than 460, use Tiny as default namespace
 			
 			bodyLabel.show($.extend({ text: $.ErrMessage(key, null, options.ns ? options.ns : "Detailed") }, options));
+			return bodyLabel;
 
 		}
 	};
@@ -108,7 +110,8 @@
 			text: text || $.Res.SomeError,
 			css: css || "redbox block",
 			location: location || "beforeStart",
-			sticky: true
+			sticky: true,
+			showCloseBtn: false
 		});
 
 		return this;

@@ -49,12 +49,12 @@
 			// call ajax with set properties
 			this.Ajax = $.Sh.Ajax.call(this.element, {
 				trigger: base.options.trigger,
-				onprepost: function () {
+				onprepost: function (trigger) {
 					$.BodyLabel("hide")
 
 					var f = this.options.style == "array" ? base.element.formToArray(true) : base.element.formToJson();
 					this.addparams(f, this.options.style);
-					return (base.options.onprepost) ? base.options.onprepost.call(base) : true;
+					return (base.options.onprepost) ? base.options.onprepost.call(base,trigger) : true;
 
 
 				},
@@ -173,6 +173,7 @@
 
 	// plugin
 	$.fn.ShDelete = function (options) {
+		
 		return this.each(function () {
 			if (!$(this).data("sh.delete")) {
 				$(this).data("sh.delete", new Delete($(this), options));

@@ -103,7 +103,6 @@
 			e.preventDefault();
 			if (!base.options.active) return;
 
-
 			if (verb == "hide") {
 				base.hide();
 				return;
@@ -120,19 +119,21 @@
 
 			if (!this.options.active) return;
 
-			if (this.options.onBeforeShow) {
-				this.options.onBeforeShow();
-				return this;
-			}
+			if (this.options.onBeforeShow && !this.options.onBeforeShow.call(this)) return this.element;
+			//if (this.options.onBeforeShow) {
+			//	this.options.onBeforeShow();
+			//	return this;
+			//}
 
 			// show , if onToggle is defined, i should find out whether to call it or not according to what? visible state
 			
 			if (!this.gutsElement.is(":visible")) {
 				
-				this.options.onToggle &&  this.options.onToggle.call(this); // fire toggle
+				this.options.onToggle && this.options.onToggle.call(this); // fire toggle
+				
 				switch (this.options.effect) {
 					case "slide":
-						this.gutsElement.slideDown(50); // show
+						this.gutsElement.slideDown("fast"); // show
 						break;
 					case "fade":
 						this.gutsElement.fadeIn();
@@ -147,7 +148,7 @@
 			this.options.state = "show";
 			this.element.addClass(this.options.togglecss);
 			this.options.onShow && this.options.onShow.call(this); // fire onshow anyway // double check
-			return this;
+			return this.element;
 
 		},
 		toggle: function () {
@@ -160,22 +161,23 @@
 				this.show();
 			}
 			
-			return this;
+			return this.element;
 
 		},
 		hide: function () {
 			if (!this.options.active) return;
 
-			if (this.options.onBeforeHide) {
-				this.options.onBeforeHide();
-				return this;
-			}
+			if (this.options.onBeforeHide && !this.options.onBeforeHide.call(this)) return this;
+			//if (this.options.onBeforeHide) {
+			//	this.options.onBeforeHide.call(this);
+			//	return this;
+			//}
 
 			if (this.gutsElement.is(":visible")) {
 				this.options.onToggle && this.options.onToggle.call(this); // fire toggle, this shouldnt fire always
 				switch (this.options.effect) {
 					case "slide":
-						this.gutsElement.slideUp(100);
+						this.gutsElement.slideUp("fast");
 						break;
 					case "fade":
 						this.gutsElement.fadeOut();
@@ -189,7 +191,7 @@
 			this.options.state = null;
 			this.element.removeClass(this.options.togglecss);
 			this.options.onHide && this.options.onHide.call(this);
-			return this;
+			return this.element;
 		},
 		setActive: function (bActive) {
 			this.options.active = bActive;
@@ -349,6 +351,7 @@
 			if (!this.options.selected.length)
 				this.options.selected = this.items.first();
 		}
+		
 
 		// initialize
 		this.init(options);
@@ -372,7 +375,7 @@
 			if (!this.options.selected.is(src)) {
 				this.items.removeClass(this.options.css);
 				this.select(src);
-				this.options.onchange && this.options.onchangec.call(this, src);
+				this.options.onchange && this.options.onchange.call(this, src);
 			}
 
 			//hide
@@ -387,6 +390,7 @@
 			item.addClass(this.options.css);
 			this.options.html ? this.expands.srcElement.html(item.html()) : this.expands.srcElement.text(item.text()); // watch
 			this.options.selected = item;
+			
 
 		}
 	};
@@ -481,7 +485,6 @@
 			// fire hide all, then show this
 			var base = this;
 			if (item.options.state == "show" && !base.options.toggle) return;
-
 			$.each(base.collection, function (i, o) {
 				o.hide();
 				o.element.removeClass(base.options.selectcss);

@@ -66,6 +66,7 @@
 			return this;
 		},
 		show: function (options) {
+			
 			var base = this;
 			var s = $.extend({}, this.options, options);
 			// things that can be passed on runtime:

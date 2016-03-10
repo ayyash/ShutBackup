@@ -29,11 +29,12 @@
 	};
 	$.getFunction = function ($context, fn) {
 		var fn = $context.data(fn);
-
 		if (!fn || fn == null) return undefined;
 		//if (window[fn] && typeof (window[fn]) == "function") {
 		//	return window[fn];
 		//}
+		
+
 		if ($.UiSh[fn] && typeof ($.UiSh[fn]) == "function") {
 			return $.UiSh[fn];
 		}

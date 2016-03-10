@@ -67,7 +67,7 @@
 		//contentType: // default instead of application/x-www-form-urlencoded; charset=UTF-8, send "application/json; charset=utf-8",  otherwise (multipart/form-data)
 		onload: null,
 		onloading: function (bloading,srcelement) {
-			bloading ? this.addClass("loadings") : this.removeClass("loadings");
+			bloading ? this.addClass($.Sh.Ajax.defaults.loadingcss) : this.removeClass($.Sh.Ajax.defaults.loadingcss);
 		},
 		onprepost: null,
 		onprogress: null,
@@ -103,11 +103,10 @@
 			
 			var base = this;
 			// fire onload
-			
-
 			if (base.options.onload) base.options.onload.call(base.element);
 
 			// turn data to json to make it easier to addparams
+			// TODO: whatever jquery is doing to detect style, do it here, isArray, isPlainObject, else qs
 			if (base.options.style == "qs") {
 				base.options.data = $.Sh.toJson(base.options.data);
 			} else if (base.options.style == "array") {
@@ -121,11 +120,12 @@
 			if (!base.options.silent) {
 			
 				if (base.options.trigger) {
-					
-					// if not self, delegate within self
+				
+					// if not self, delegate within self, i have a problem, "this" doesnt belong to the trigger!
 					base.element.on("click", base.options.trigger, function (e) {
 						// what if base.options.trigger never exists? this should never happen right?
 						//if (!$(e.target).is(base.options.trigger)) return false;
+						
 						return base._click(this, e);
 
 					});
@@ -142,7 +142,6 @@
 		},
 		_click: function (element, e) {
 			var base = this;
-
 			if (e.isDefaultPrevented() || base._IsLoading) {
 				return false;
 			}
@@ -198,13 +197,19 @@
 
 			var ajaxops = {
 				success: function (data, textStatus) {
-					_debug(data, "data received");
+					if (base.options.dataType != "html") _debug(data, "data received");
+					else _debug({ content: data }, "content received");
+
 					if (base.options.onfinish) base.options.onfinish.call(base.element, data, srcelement);
 
 				},
-				error: function (data) {
-					_debug(data.responseJSON || data.responseText, "error");
-					if (base.options.onfinish) base.options.onfinish.call(base.element, base.options.dataType == "json" ? data.responseJSON : data.responseText, srcelement);
+				error: function (data, status) {
+				
+					if (!status){
+						_debug(data.responseJSON || data.responseText, "error");
+						if (base.options.onfinish) base.options.onfinish.call(base.element, base.options.dataType == "json" ? data.responseJSON : data.responseText, srcelement);
+					}
+					// let plugin handle different statuses
 				},
 				xhr: function () {
 					myXhr = $.ajaxSettings.xhr();

@@ -18,7 +18,7 @@
 			isGreedy: this.data("greedy"),
 			hookSelector: this.data("hook-selector"),
 			addOnLoad: this.data("addonload"),
-			altText: this.data("trigger"),
+			altText: this.data("alt-text"), // this does not matter
 			target: this.data("target"),
 			onLoad: $.getFunction(this, "onload"),
 			onAdd: $.getFunction(this, "onadd"),
@@ -54,8 +54,8 @@
 		this.element = el;
 
 		// define template, allow template change on runtime
-		this.template =  $(this.options.template);
-
+		this.template = $(this.options.template);
+		
 		// find trigger, remove trigger and target
 		this.trigger = (this.options.trigger instanceof jQuery) ? this.options.trigger : this.element.find(this.options.trigger);
 
@@ -117,7 +117,7 @@
 			
 
 			if (base.options.addOnLoad && !base.collection.length) {
-
+				
 				base.addNew(false);
 			}
 
@@ -133,7 +133,7 @@
 
 
 			var fs = $(base.template.mustache({ RowIndex: base.collection.length, Identifier: base.options.identifier, UniqueRowIndex: base.options.UniqueRowIndex })).insertBefore(base.target).ShApplyHiLight();
-
+			
 
 			// add row
 			var rowvalue = base.getElementValue(fs);
@@ -151,7 +151,7 @@
 			// but im going to use isGreedy instead
 			
 			if (!base.options.isGreedy) {
-
+				
 				if (row.value == 0) {
 					base.showTrigger(false);
 				}
