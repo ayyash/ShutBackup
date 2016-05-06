@@ -37,7 +37,33 @@
 		-webkit-border-radius: 8px;
 	}
 }
+/* icon definiton */
 
+.symbol {
+	display: inline-block;
+	
+	&:before {
+	  .symbolDef();
+	  vertical-align: middle; /*-1px*/
+	 font-size: 200%;/* this is because im padding the icon file with 50% of its width */
+	}
+	
+	&.loadings:before {
+		visibility: hidden;
+	}
+}
+.symbolAfter {
+	display: inline-block;
+	&:after{
+	  .symbolDef();
+		font-size: 198%;
+	  vertical-align: middle; /*-1px*/
+	}
+	
+	&.loadings:before {
+		visibility: hidden;
+	}
+}
 /*modal close button */
 .jqmClose {
 	position: absolute;

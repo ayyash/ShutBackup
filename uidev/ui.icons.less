@@ -1,42 +1,7 @@
 ﻿/// <reference path="x_imports.less" />
 
 
-.symbolDef(){
-	font-family: @iconfont;
-	text-transform: none;
-	font-weight: normal!important;
-	display: inline-block;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-smooth:always;
-}
 
-.symbol {
-	display: inline-block;
-	
-	&:before {
-	  .symbolDef();
-	  vertical-align: middle; /*-1px*/
-	 font-size: 200%;/* this is because im padding the icon file with 50% of its width */
-	}
-	
-	&.loadings:before {
-		visibility: hidden;
-	}
-}
-.symbolAfter {
-	display: inline-block;
-	&:after{
-	  .symbolDef();
-		font-size: 198%;
-	  vertical-align: middle; /*-1px*/
-	}
-	
-	&.loadings:before {
-		visibility: hidden;
-	}
-}
 .base {
 	.symbolAfter;
 	.changeSymbol(@icon-base,"after");
