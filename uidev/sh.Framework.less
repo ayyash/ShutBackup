@@ -37,56 +37,37 @@
 		-webkit-border-radius: 8px;
 	}
 }
-/* icon definiton */
+/* symbol definition */
+
 
 .symbol {
-	display: inline-block;
 	
 	&:before {
-	  .symbolDef();
-	  vertical-align: middle; /*-1px*/
-	 font-size: 200%;/* this is because im padding the icon file with 50% of its width */
-	}
+		.symbolDef();
+		vertical-align: middle; /*-1px*/
+		font-size: 100%; /* this is because im padding the icon file with 50% of its width */
 	
+	}
+
 	&.loadings:before {
 		visibility: hidden;
 	}
 }
+
+
 .symbolAfter {
-	display: inline-block;
-	&:after{
-	  .symbolDef();
-		font-size: 198%;
-	  vertical-align: middle; /*-1px*/
-	}
 	
+	&:after {
+		.symbolDef();
+		font-size: 198%;
+		vertical-align: middle; /*-1px*/
+		
+	}
+
 	&.loadings:before {
 		visibility: hidden;
 	}
 }
-/*modal close button */
-.jqmClose {
-	position: absolute;
-	top: 5px;
-	right: 5px;
-	display: block;
-	overflow: hidden;
-	#rem > .font-size(1.8);
-	text-align: center;
-	width: 30px;
-	height: 23px;
-	line-height: 0.9em;
-
-	&:before {
-		content: "x";
-	}
-
-	&:hover {
-		#rem > .font-size(2);
-		line-height: 0.7em;
-	}
-}
-
 
 /* stacks */
 .overview fieldset {
@@ -124,22 +105,22 @@
 	margin-bottom: 10px;
 }
 
-.stack .stackitem,
-ol.stacklist > li {
-	margin-bottom: 30px;
+	.stack .stackitem,
+	ol.stacklist > li {
+		margin-bottom: 30px;
 
-	.tight & {
-		margin-bottom: 10px;
+		.tight & {
+			margin-bottom: 10px;
+		}
 	}
-}
 
-.stack label,
-ol.stacklist > li label,
-.stack .label,
-ol.stacklist > li .label {
-	display: block;
-	padding-bottom: 5px;
-}
+		.stack label,
+		ol.stacklist > li label,
+		.stack .label,
+		ol.stacklist > li .label {
+			display: block;
+			padding-bottom: 5px;
+		}
 
 
 /* wizard list, could be ol or ul */
@@ -147,24 +128,24 @@ ol.stacklist > li .label {
 	margin-bottom: 20px;
 }
 
-.wizardlist > li {
-	display: inline-block;
-	padding: 5px 10px;
-	border-bottom: 3px solid @greynormal;
-}
+	.wizardlist > li {
+		display: inline-block;
+		padding: 5px 10px;
+		border-bottom: 3px solid @greynormal;
+	}
 
-.wizardlist > li a {
-}
+		.wizardlist > li a {
+		}
 
-.wizardlist > li.inactive {
-	color: @textlighter;
-	border-color: @grey;
-}
+		.wizardlist > li.inactive {
+			color: @textlighter;
+			border-color: @grey;
+		}
 
-.wizardlist > li.selected {
-	border-color: @red;
-	color: @color;
-}
+		.wizardlist > li.selected {
+			border-color: @red;
+			color: @color;
+		}
 
 /* detailed extension: ingredients */
 .ingredients {
@@ -195,12 +176,12 @@ ul.activelist > li {
 	margin-bottom: 1px;
 }
 
-ul.activelist > li a {
-	display: block;
-	background-color: @grey;
-	padding: 2px 5px;
-	color: @color;
-}
+	ul.activelist > li a {
+		display: block;
+		background-color: @grey;
+		padding: 2px 5px;
+		color: @color;
+	}
 
 ul.activelist li a:hover {
 	background-color: @linkcolor;
@@ -208,6 +189,57 @@ ul.activelist li a:hover {
 }
 
 
+/****** filter list or expand list */
+.filterlist {
+	position: relative;
+	.h {
+		.a;
+		
+	}
+	&.toggle {
+		.h {
+			
+		}
+	}
+	.guts {
+		display: none;
+		background-color: @inversecolor;
+		left: 0;	
+		top: 30px;
+		z-index: 1000;
+		border:3px solid @greynormal;
+		padding: 3px;
+		.basicballoon;
+		position: absolute;
+		
+		&:after {
+			border-color: @greydark;
+			#arrow > .above(6px); 
+		}
+	}
+	.guts li {
+		/* default width can be overwritten with the right up1,2,3... */
+	
+	
+		a {
+			display: block;
+			padding: 3px;
+		
+		}
+	
+	
+		&:hover {
+			background-color: @lightyellow;
+		}
+		&.selected {
+			background-color: @grey;
+		}
+		&.selected a {
+			color:@color;
+		}
+		
+	}
+}
 
 
 
@@ -252,6 +284,8 @@ table.rich {
 	background-color: @lightblue;
 
 	.header {
+		color: @blue;
+		.getSymbol(@icon-info);
 		text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
 	}
 }
@@ -261,7 +295,7 @@ table.rich {
 	background-color: @lightyellow;
 
 	.header {
-		/*.getSymbol(@icon-alert);*/
+		.getSymbol(@icon-exclamation);
 	}
 }
 
@@ -274,6 +308,7 @@ table.rich {
 	.header {
 		display: block;
 		.red;
+		.getSymbol(@icon-exclamation);
 		text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
 	}
 }
@@ -311,13 +346,6 @@ input[disabled] {
 header nav.main {
 	padding-top: 10px;
 }
-
-header nav.tools {
-	position: absolute;
-	right: 0;
-	top: 5px;
-}
-
 
 /* typography */
 .hsub {
@@ -377,17 +405,16 @@ header nav.tools {
 
 /* poplist */
 .poplist {
-	margin-bottom: 20px;
-
-	.h {
-		border: 1px solid @grey;
-		padding: 10px;
-	}
-
 	.guts {
 		background-color: @inversecolor;
 		border: 3px solid @greydark;
-		padding: 3px;
+		.basicballoon;
+		position: absolute;
+
+		&:after {
+			border-color: @greydark;
+			#arrow > .above(8px);
+		}
 	}
 
 	li {
@@ -397,24 +424,6 @@ header nav.tools {
 		}
 	}
 }
-/****** filter list or expand list */
-.filterlist {
-
-	.guts li {
-		/* default width can be overwritten with the right up1,2,3... */
-		padding: 3px;
-
-
-		&:hover {
-			background-color: @lightyellow;
-		}
-
-		&.selected {
-			background-color: @grey;
-		}
-	}
-}
-
 /* keep these last */
 .loading, .loadings {
 	background-position: left top;
@@ -433,24 +442,23 @@ header nav.tools {
 
 /* controls */
 .radio {
-
+	
 	&:before {
 		border: 1px solid @grey;
 	}
-
 	&.checked:before {
-		border: 4px solid @green;
+		border:4px solid @green;
 	}
+	
 }
-
 .checkbox {
-
+	
 	&:before {
 		border: 1px solid @grey;
 	}
-
 	&.checked:before {
-		border: 4px solid @green;
+		border:4px solid @green;
 		/*.displaySymbol(@icon-check)*/
 	}
+	
 }
