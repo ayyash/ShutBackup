@@ -16,7 +16,7 @@ In order to use styles as included from the framework, use css/sh.min.css
 
 This stylesheet is a compilation of the LESS files in **dev** folder, and **uidev** folder. 
 
-[x] *TODO*: include C# code the for style generator (Gulp can handle it just fine).
+- [ ] *TODO*: include C# code the for style generator (Gulp can handle it just fine).
 
 The sequence is as follows, in case you want to recreated:
 
@@ -34,7 +34,7 @@ The dev folder contains the major definitions of styles that any UI designer nee
 
 ### RTL support
 
-[ ] *TODO* : section about: dev/rtl.js files that mirrors on run time during development.
+- [ ] *TODO* : section about: dev/rtl.js files that mirrors on run time during development.
 
 The stylesheet for RTL is generated and added to css folder, you can use it alone to produce the same interface, mirrored. 
 
