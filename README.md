@@ -3,7 +3,7 @@
 
 Documentation is work in progress. Find here <a href="http://vinepaper.com/">Shut Framework</a>
 
-The idea of this framework, is to sepearte UI behavior from business behavior whenever possible.
+The idea of this framework, is to sepearte UI behavior from business behavior whenever possible. 
 
 
 ## Styles
@@ -25,7 +25,7 @@ The sequence is as follows, in case you want to recreated:
 3. dev/sh.less (this contains imports of all other dev/sh.*.less)
 4. uidev/sh.framework.less
 5. dev/rtl.sh.less (of RTL is required)
-6. dev/sh.media.*.less (media queiries wrapped inside `media only screen and (min-width: {0}px)`)
+6. dev/sh.media.(\d){1}.\*.less (media queiries wrapped inside `media only screen and (min-width: {0}px)`) where {0} is the \* in the filename
 7. dev/sh.print.less (if exists)
 8. uidev/ui.*.less
 9. uidev/rtl.*.less (if required and exists)
@@ -42,3 +42,6 @@ The stylesheet for RTL is generated and added to css folder, you can use it alon
 <link rel="stylesheet" href="css/sh.rtl.min.css" />
 ```
 
+## Script
+
+[ ] *TODO*
