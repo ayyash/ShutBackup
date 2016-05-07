@@ -42,6 +42,6 @@ The stylesheet for RTL is generated and added to css folder, you can use it alon
 <link rel="stylesheet" href="css/sh.rtl.min.css" />
 ```
 
-## Script
+## Scripts
 
-[ ] *TODO*
+- [ ] *TODO*
